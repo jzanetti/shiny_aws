@@ -1,0 +1,25 @@
+shiny: 
+  name: hello_world
+  s3: s3://xxxxxxx-shiny-app/r
+  userdata: cloud-init.sh
+aws:
+  image: ami-xxxxxxxxxxxxxxx
+  KeyName: xxxxxxxxx-key
+  SecurityGroupIds:
+    - sg-xxxxxxxxx
+  SubnetId: subnet-xxxxxxxxx
+  InstanceType: t2.medium
+  Placement:
+    AvailabilityZone: ap-southeast-2a
+  IamInstanceProfile:
+    Arn: arn:aws:iam::xxxxxxxxx:instance-profile/ShinyApp_role
+  BlockDeviceMappings:
+    DeviceName: /dev/sda1
+    Ebs:
+      VolumeType: gp2
+      DeleteOnTermination: true
+      VolumeSize: 15
+  elastic_ip: eipalloc-xxxxxxxxx
+  lifespan: 15
+  authentication: true
+  spot_price: 0.1
