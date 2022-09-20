@@ -33,7 +33,7 @@ Contents
 
 .. toctree::
 
-   Basics
+   Installation
    Nix_derivation
    Build_nix
    Proj_manage

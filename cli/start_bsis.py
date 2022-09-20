@@ -52,8 +52,11 @@ def setup_parser():
 def main(workdir: str, cfg: dict):
     create_infras(workdir, cfg)
 
-if __name__ == "__main__":
+def start_bsis():
     args = setup_parser()
     cfg = read_cfg(args.cfg)
     main(args.workdir, cfg)
+
+if __name__ == "__main__":
+    start_bsis()
 

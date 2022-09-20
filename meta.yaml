@@ -1,5 +1,5 @@
 package:
-  name: shiny_app
+  name: shiny_aws_bsis
   version: {{ environ.get("GIT_DESCRIBE_TAG", "0.0.1") }}
 
 source:
@@ -10,11 +10,7 @@ build:
   script:
     - $PYTHON setup.py install
   entry_points:
-    - start_shiny = cli.start_shiny:start_shiny
-    - copy_s3 = cli.copy_s3:copy_s3
-    - make_docker = cli.make_docker:make_docker
-    - create_base = cli.create_base:create_base
-    - make_ami = cli.make_ami:make_ami
+    - start_bsis = cli.start_bsis:start_bsis
 
 requirements:
   build:
