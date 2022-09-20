@@ -17,7 +17,7 @@ Welcome to SHINY_AWS
 
 The main difference between BSIS and ASIS is that ASIS is able to scale out the number of instances when the shiny server becomes busy (e.g., suddenly there are more people hit the website), and scale in when the resources are not required.
 
-BSIS is usually used for development purpose (e.g., the scaling is not a big issue, and there are existing security groups, subnets etc. that can be shared by multiple developers). ASIS is recommended for production deployment while we want a relatively isolated while scalable working environment (e.g., ASIS creates and manages its own permissions).
+BSIS is usually used for development purpose (e.g., the scaling is not a big issue, and there are existing security groups, subnets etc. that can be shared by multiple developers). ASIS is recommended for production deployment while we want a relatively isolated and scalable working environment (e.g., ASIS creates and manages its own permissions).
 
 Besides the above noted services 
 
