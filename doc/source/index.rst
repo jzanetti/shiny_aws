@@ -35,4 +35,5 @@ Contents
 
    Installation
    Shiny
+   Base_AMI
    BSIS

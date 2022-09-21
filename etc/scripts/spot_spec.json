@@ -1,0 +1,26 @@
+{
+    "ImageId": "ami-xxx",
+    "KeyName": "shiny-ec2-key",
+    "SecurityGroupIds": [
+        "sg-xxx"
+    ],
+    "SubnetId": "subnet-xxx",
+    "InstanceType": "t2.medium",
+    "Placement": {
+        "AvailabilityZone": "ap-southeast-2a"
+    },
+    "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::xxx:instance-profile/ShinyApp_role"
+    },
+    "BlockDeviceMappings": [
+        {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true,
+                "VolumeSize": 15
+            }
+        }
+    ],
+    "UserData": "IyEvYmluL2Jhc2sdfsdfsdf4rewfefsZS50eHQ="
+}
