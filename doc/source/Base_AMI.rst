@@ -17,6 +17,7 @@ There are two configurations which we may need to adjust:
 An example of ``cloud-init.sh`` is shown below:
 
 .. code-block:: bash
+
     #!/bin/bash
 
     sudo apt-get update
