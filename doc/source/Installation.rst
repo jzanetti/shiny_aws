@@ -9,10 +9,16 @@ This page contains the instructions about how to install **SHINY_AWS**
 
 Install BSIS
 ------
-**BSIS** can be simply install with the provided ``makefile``
+**BSIS** can be simply install with the provided ``makefile``:
 
 .. code-block:: bash
 
    make bsis
 
-The make file will call ``meta.yaml``, ``setup.py`` and ``env.yml``, and create a conda environment in 
+The ``makefile`` file will call ``meta.yaml``, ``setup.py`` and ``env.yml``, and create a conda environment ``shiny_aws_bsis``, which contains all the dependancies.
+
+
+
+Install ASIS
+------
+TBA
