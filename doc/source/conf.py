@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = 'Sijin Nix'
+project = 'SHINY_AWS'
 copyright = '2021, Sijin'
 author = 'Sijin'
 
