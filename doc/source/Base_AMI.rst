@@ -1,7 +1,7 @@
 Base AMI
 =============
 
-We can create a base AMI to include all the necessary dependancies. An simple script ``etc/scripts/create_base.py`` is provided to create the base image.
+We can create a base AMI to include all the necessary dependancies. Two simple scripts ``etc/scripts/create_base.py`` and ``etc/scripts/create_ami.py`` are provided to create the base image.
 
 .. note::
 
@@ -10,7 +10,7 @@ We can create a base AMI to include all the necessary dependancies. An simple sc
 
 Configuration
 ***********
-There are two configurations which we may need to adjust:
+There are two configurations (for ``create_base.py``) which we may need to adapt:
 - ``cloud-init.sh``: here we need to define the dependancies to be installed, and server authentication if needed
 - ``spot_spec.json``: the instance configuration (e.g., the instance type etc.)
 
@@ -58,3 +58,11 @@ Deploying the instance with the base image is very simple, we just need to run:
     python create_base.py
 
 In addition to the locations of configurations, we also need to specify how much we are willing to pay for the spot instance.
+
+After the instance being brought up, we need to make an AMI as:
+
+.. code-block:: bash
+
+    python create_ami.py
+
+Note that after the deployment, we will need to terminate the instance manually.
