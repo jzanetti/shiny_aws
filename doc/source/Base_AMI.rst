@@ -5,7 +5,7 @@ We can create a base AMI to include all the necessary dependancies. An simple sc
 
 .. note::
 
-    We always can run **SHINY_AWS** using the AWS base Linux image. In this case we need to install dependancies ``cloud-init.sh`` at the application, which may result in a slow initiation of an EC2 instance.
+    We always can run **SHINY_AWS** using the AWS base Linux image. In this case we need to install dependancies from ``cloud-init.sh`` at the application level, which may result in a slow initiation of an EC2 instance.
 
 
 Configuration
