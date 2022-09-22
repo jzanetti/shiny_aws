@@ -35,4 +35,4 @@ Contents
    Installation
    Shiny
    BSIS
-   Base_AMI
+   Customized_AMI

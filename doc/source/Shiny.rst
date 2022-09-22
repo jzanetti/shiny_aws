@@ -1,7 +1,7 @@
 Shiny application
 =====
 
-In the section, we describes how to create a Shiny application for **SHINY_AWS**
+In the section, we describe how to create a Shiny application from **SHINY_AWS**
 
 Shiny application basis
 ------

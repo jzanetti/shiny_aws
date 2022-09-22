@@ -13,6 +13,7 @@ For **BSIS**, there are two main sections in the configuration
   - **aws**: AWS specific setups
 
 For **shiny**, we need to define where the Shiny application comes from. Note that all Shiny applications used in **BSIS** must be uploaded to S3 beforehand. How to create a Shiny on S3 can be obtained `here <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_.
+
 An simple example is given below:
 
 .. code-block:: bash
@@ -22,7 +23,7 @@ An simple example is given below:
       s3: s3://xxxxxxx-shiny-app/r
       userdata: cloud-init.sh
 
-The above provides some basic shiny information. The instance will be brought up by using the user data ``cloud-init.sh`, 
+The above provides some basic shiny information. The instance will be brought up by using the user data ``cloud-init.sh``, 
 and the shiny application from ``s3://xxxxxxx-shiny-app/r/hello_world``.
 
 For **aws**, we need to provide usual AWS configurations such as ``VPC``, ``subnets`` and the ``ami`` to be used. An example is given below:
