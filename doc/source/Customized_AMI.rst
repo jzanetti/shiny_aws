@@ -50,7 +50,7 @@ An example of ``cloud-init.sh`` is shown below:
 In the above example, we installed ``awscli`` and a few R dependancies such as ``tidyr``. A docker server is also installed. 
 Besides, we use ``nginx`` to configure the username and password at the end of configuration (in this case, the username is ``shiny_aws`` and password is ``12345``).
 
-Making an customized AMI
+Making a customized AMI
 ***********
 Deploying the instance with the base image is very simple, we just need to run:
 

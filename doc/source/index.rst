@@ -36,3 +36,4 @@ Contents
    Shiny
    BSIS
    Customized_AMI
+   Cookbook
