@@ -1,16 +1,17 @@
-Base AMI
+Customized AMI
 =============
 
-We can create a base AMI to include all the necessary dependancies. Two simple scripts ``etc/scripts/create_base.py`` and ``etc/scripts/create_ami.py`` are provided to create the base image.
+We can create a customized AMI to include all the necessary dependancies. Two simple scripts ``etc/scripts/create_base.py`` and ``etc/scripts/create_ami.py`` are provided to create the base image.
 
 .. note::
 
-    We always can run **SHINY_AWS** using the AWS base Linux image. In this case we need to install dependancies from ``cloud-init.sh`` at the application level, which may result in a slow initiation of an EC2 instance.
+    We always can run **SHINY_AWS** using the AWS base Linux image. In this case we need to (re)install dependancies from ``cloud-init.sh`` every time when we bring up an instance.
 
 
 Configuration
 ***********
 There are two configurations (for ``create_base.py``) which we may need to adapt:
+
 - ``cloud-init.sh``: here we need to define the dependancies to be installed, and server authentication if needed
 - ``spot_spec.json``: the instance configuration (e.g., the instance type etc.)
 
@@ -46,10 +47,10 @@ An example of ``cloud-init.sh`` is shown below:
     sudo aws s3 cp s3://mot-shiny-app/auth/aginx.cfg /etc/nginx/sites-available/default
     sudo htpasswd -b -c /etc/nginx/.htpasswd shiny_aws 12345
 
-In the above example, we installed `awscli` and a few R dependancies such as ``tidyr``. A docker server is also installed. 
+In the above example, we installed ``awscli`` and a few R dependancies such as ``tidyr``. A docker server is also installed. 
 Besides, we use ``nginx`` to configure the username and password at the end of configuration (in this case, the username is ``shiny_aws`` and password is ``12345``).
 
-Deployment
+Making an customized AMI
 ***********
 Deploying the instance with the base image is very simple, we just need to run:
 
