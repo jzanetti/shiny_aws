@@ -5,8 +5,8 @@ from os import remove
 from os.path import basename, join
 from subprocess import Popen
 
-cloud_init = "etc/scripts/cloud-init.sh"
-spot_spec_path = "etc/scripts/spot_spec_mot.json"
+cloud_init = "etc/cloud-init.sh"
+spot_spec_path = "etc/spot_spec_mot.json"
 spot_price = 0.1
 
 # ----------------------------------
