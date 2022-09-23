@@ -24,7 +24,7 @@ An `hello_world` example is used to demostrate the usage for this system.
 
 .. note::
 
-   Any issues/suggestions for this system please go to Sijin ZHANG at zsjzyhzp@gmail.com
+   Any issues/suggestions for this system please go to **Sijin ZHANG** at zsjzyhzp@gmail.com
 
 
 Contents
