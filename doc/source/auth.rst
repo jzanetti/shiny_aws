@@ -96,12 +96,11 @@ Step 6: Restart Nginx and Shiny as:
 Last we just need to restart ``nginx`` and ``shiny`` as:
 
 .. code-block:: bash
+
     sudo systemctl start shiny-server
     sudo service nginx start
 
-Last we can access the page at your own elastic IP on AWS
-
-We also can check ``nginx`` status as: ``service nginx status``.
+After the above we can access the page at your own elastic IP on AWS. We also can check ``nginx`` status as: ``service nginx status``.
 
 .. note::
 
