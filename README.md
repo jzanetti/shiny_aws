@@ -13,4 +13,4 @@ The system helps to construct an AWS based infrastructure for hosting [Shiny](ht
    - Shiny application
    - Optional: Customized DNS using Route 53
 
-The documentation for the system can be found [here](shiny-aws-doc.rtfd.io)
+The documentation for the system can be found [here](https://shiny-aws-doc.readthedocs.io/en/latest/BSIS.html)
