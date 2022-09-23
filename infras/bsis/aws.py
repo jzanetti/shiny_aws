@@ -132,5 +132,3 @@ def create_infras(workdir: str, cfg: dict) -> str:
             f"--launch-specification file://{output_json}")
     p = Popen([cmd], shell=True)
     p.communicate()
-
-    remove(output_json)

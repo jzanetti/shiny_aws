@@ -38,6 +38,11 @@ After we have an instance running with all the dependancies, we can use ``etc/sc
 
 where ``instance_id`` represents the instance that being brought up at `Step 1.1`, and ``ami_name`` is your AMI ID to be used on AWS.
 
+.. note::
+
+    After the AMI being made, please remember to terminate the instance from `Step 1.1`
+
+Details about making an customized AMI can be accessed `here <https://shiny-aws-doc.readthedocs.io/en/latest/Customized_AMI.html>`_
 
 Step 2: Shiny application on S3
 """""""""
@@ -62,3 +67,37 @@ Then the Shiny application can be uploaded to S3 using ``etc/scripts/copy_shiny.
     shiny_app_s3 = "s3://xxxx-shiny-app/r/"
 
 where ``shiny_app_local`` is the place where your application sits locally, and ``shiny_app_s3`` is where the application to be uploaded (it must be consistent with **<S3 path>** in `Section 2.1`)
+
+Details about creating a Shiny application for **SHINY_AWS** can be accessed `here <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_
+
+Step 3: Bring up the Shiny online
+"""""""""
+
+As we discussed before, there are two ways that you can bring up a shiny application online: **BSIS** and **ASIS**. 
+For general development purpose, using **BSIS** is recommended, while **ASIS** should be adopted for operational usage.
+
+3.1: Using BSIS
+***********
+Before we start a BSIS infrastructure, please make sure that you have the following ready:
+
+- A customized AMI or the basic AWS linux AMI (made by `Step 1`, see details from `[here] <https://shiny-aws-doc.readthedocs.io/en/latest/Customized_AMI.html>`_)
+- A Shiny application being uploaded to S3 (made by `Step 2`, with four compulsary components listed in `[Shiny Application] <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_).
+- A private key for accessing EC2 (see details `[here] https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html`_)
+- AWS related information such as ``SecurityGroupIds``, ``SubnetId`` and ``IamInstanceProfile``, which can be obtained from your AWS administor.
+- Optionally, you can have your Elastic IP or authentications if you have them
+
+Here we use an example **BSIS** configuration (at ``etc/cfg/bsis.yml``) to bring up the instance. 
+
+.. code-block:: bash
+
+    conda activate shiny_aws_bsis
+    start_bsis --cfg etc/cfg/bsis.yml --workdir /tmp/bsis_exp
+
+Note that you will need to update ``etc/cfg/bsis.yml`` accordingly based on your own circumstance (e.g., the 5 elements listed above).
+
+After this we should be able to view our Shiny application either though the automatically assigned public IP or the elastic IP defined in ``bsis.yml``.
+
+.. note::
+
+    Note that it is a good practice to set the lifespan for the shiny application in ``bsis.yml``. If not, please remember to terminate the server when you don't need it anymore.
+

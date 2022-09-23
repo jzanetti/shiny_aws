@@ -18,3 +18,4 @@ requirements:
     - setuptools
   run:
     - python>=3.9
+    - pyyaml

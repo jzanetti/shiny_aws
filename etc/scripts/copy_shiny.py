@@ -7,8 +7,8 @@ from subprocess import Popen
 # shiny_app_local: local shiny application directory
 # shiny_app_s3: shiny application on S3
 # -------------------------------
-shiny_app_local = "../examples/hello_world"
-shiny_app_s3 = "s3://mot-shiny-app/r/"
+shiny_app_local = "../examples/hello_world_mot"
+shiny_app_s3 = "s3://mot-shiny-app/examples"
 
 # -------------------------------
 # Codes start from here

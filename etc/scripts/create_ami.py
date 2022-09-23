@@ -5,7 +5,7 @@ from subprocess import Popen
 # instance_id: instance ID (the instance is brought up by create_base.py)
 # ami_name: AMI name to be used
 # -------------------------------
-instance_id = "abc"
+instance_id = "i-test12345"
 ami_name = "shiny_aws_ami"
 
 # ----------------------------------

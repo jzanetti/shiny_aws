@@ -31,7 +31,7 @@ For **aws**, we need to provide usual AWS configurations such as ``VPC``, ``subn
 .. code-block:: bash
 
       aws:
-         image: ami-xxxxxxxxxxxxxxx
+         ImageId: ami-xxxxxxxxxxxxxxx
          KeyName: xxxxxxxxx-key
          SecurityGroupIds:
             - sg-xxxxxxxxx
