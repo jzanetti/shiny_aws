@@ -43,7 +43,7 @@ def setup_parser():
         help="S3 directory where to hold the shiny application")
 
     return parser.parse_args(
-        # ["--cfg", "etc/cfg/bsis_mot.yml", "--workdir", "bsis_run"]
+        # ["--src", "/home/szhang/Gitlab/shiny_app/r/fleet", "--dest_dir", "s3://mot-shiny-app/r/fleet/"]
     )
 
 
@@ -53,17 +53,9 @@ def copy_shiny():
     shiny_app_local = args.src
     shiny_app_s3 = args.dest_dir.strip("/")
 
-    shiny_name = basename(shiny_app_local)
-    all_files = glob(f"{shiny_app_local}/*")
-
-    for proc_file in all_files:
-        proc_file = Path(proc_file)
-        if proc_file.suffix in [".R", ".sh", ".conf", ".md"]:
-            proc_filename = proc_file.name
-            cmd = f"aws s3 cp {proc_file} {shiny_app_s3}/{shiny_name}/{proc_filename}"
-            print(cmd)
-            p = Popen(cmd, shell=True)
-            p.communicate()
+    cmd = f"aws s3 sync {shiny_app_local} {shiny_app_s3}"
+    p = Popen(cmd, shell=True)
+    p.communicate()
 
 if __name__ == "__main__":
     copy_shiny()
