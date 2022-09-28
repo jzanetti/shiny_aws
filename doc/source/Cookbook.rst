@@ -63,10 +63,9 @@ Then the Shiny application can be uploaded to S3 using ``etc/scripts/copy_shiny.
 
 .. code-block:: bash
 
-    shiny_app_local = "etc/examples/hello_world"
-    shiny_app_s3 = "s3://xxxx-shiny-app/r/"
+    python copy_shiny.py --src etc/examples/hello_world --dest_dir s3://xxxx-shiny-app/r/
 
-where ``shiny_app_local`` is the place where your application sits locally, and ``shiny_app_s3`` is where the application to be uploaded (it must be consistent with **<S3 path>** in `Section 2.1`)
+where ``src`` is the place where your application sits locally, and ``dest_dir`` is where the application to be uploaded (it must be consistent with **<S3 path>** in `Section 2.1`)
 
 Details about creating a Shiny application for **SHINY_AWS** can be accessed `here <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_
 

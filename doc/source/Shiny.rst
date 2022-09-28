@@ -31,12 +31,11 @@ Upload Shiny application to S3
 
 All the Shiny application used in **SHINY_AWS** must be uploaded to S3. 
 
-An script ``etc/scripts/copy_shiny.py`` is provided to copy/sync the application. We need to configure the following parameters in the scripts:
+An script ``etc/scripts/copy_shiny.py`` is provided to copy/sync the application. We need to configure the following parameters for running the scripts:
 
 .. code-block:: bash
 
-   shiny_app_local = "etc/examples/hello_world"
-   shiny_app_s3 = "s3://xxx-shiny-app/r/"
+   python copy_shiny --src <the local shiny application> --dest_dir <the S3 directory>
 
-where ``shiny_app_local`` should point to the local Shiny application development (where contains ``ui.R``, ``server.R`` etc.), 
-and ``shiny_app_s3`` is the S3 destination where the Shiny application to be sit.
+where ``src`` should point to the local Shiny application development (where contains ``ui.R``, ``server.R`` etc.), 
+and ``dest_dir`` is the S3 destination where the Shiny application to be sit.
