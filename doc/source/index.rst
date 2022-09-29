@@ -35,5 +35,6 @@ Contents
    Installation
    Shiny
    BSIS
+   ASIS
    Customized_AMI
    Cookbook

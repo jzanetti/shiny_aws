@@ -1,0 +1,88 @@
+{
+  "app": "python3 app.py",
+  "watch": {
+    "include": [
+      "**"
+    ],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "requirements*.txt",
+      "source.bat",
+      "**/__init__.py",
+      "python/__pycache__",
+      "tests"
+    ]
+  },
+  "context": {
+    "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
+    "@aws-cdk/core:stackRelativeExports": true,
+    "@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
+    "@aws-cdk/aws-lambda:recognizeVersionProps": true,
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
+    "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,
+    "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
+    "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/aws-iam:minimizePolicies": true,
+    "@aws-cdk/core:validateSnapshotRemovalPolicy": true,
+    "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": true,
+    "@aws-cdk/core:target-partitions": [
+      "aws",
+      "aws-cn"
+    ],
+    "common": {
+      "region": "ap-southeast-2",
+      "uuid": "r-shiny-asg",
+      "ami": "ami-06618c31796bff2cb"
+    },
+    "sg": {
+      "asg": {
+        "id": "shiny_asg_sg_asg_id-{uuid}",
+        "name": "shiny_asg_sg_asg_name-{uuid}"
+      }
+    },
+    "sns": {
+      "id": "shiny_asg_sns_id-{uuid}",
+      "name": "shiny_asg_sns_name-{uuid}"
+    },
+    "asg": {
+        "id": "shiny_asg_id-{uuid}",
+        "name": "shiny_asg_name-{uuid}",
+        "key_name": "shiny-ec2-key",
+        "role": {
+          "id": "shiny_asg_role_id-{uuid}",
+          "name": "shiny_asg_role_id-{uuid}"
+        },
+        "capacity": {
+          "desired": 1,
+          "min": 1,
+          "max": 3
+        },
+        "policy": {
+          "id": "shiny_asg_policy_id-{uuid}",
+          "target_utilization_percent": 75,
+          "cooldown": 300
+        }
+    },
+    "lb": {
+      "id": "shiny_asg_lb-{uuid}"
+    },
+    "vpc": {
+      "id": "shiny_asg_vpc-{uuid}",
+      "max_azs": 2,
+      "cidr": "10.0.0.0/16",
+      "subnet": "shiny_asg_subnet-{uuid}"
+    },
+    "route53": {
+      "hosted_domain": {
+        "id": "shiny_hosted_domain-{uuid}",
+        "name": "mot-dev"
+      },
+      "record": {
+        "id": "shiny_route53_record-{uuid}",
+        "name": "www.mot-dev.link"
+      }
+    }
+  }
+}

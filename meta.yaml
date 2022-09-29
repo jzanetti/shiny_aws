@@ -1,5 +1,5 @@
 package:
-  name: shiny_aws_bsis
+  name: shiny_aws
   version: {{ environ.get("GIT_DESCRIBE_TAG", "0.0.1") }}
 
 source:
@@ -11,6 +11,7 @@ build:
     - $PYTHON setup.py install
   entry_points:
     - start_bsis = cli.start_bsis:start_bsis
+    - start_asis = cli.start_asis:start_asis
 
 requirements:
   build:

@@ -1,0 +1,1 @@
+SHINY_ASG_PATH = "infras/asis/shiny_asg"

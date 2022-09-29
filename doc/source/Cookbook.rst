@@ -100,3 +100,16 @@ After this we should be able to view our Shiny application either though the aut
 
     Note that it is a good practice to set the lifespan for the shiny application in ``bsis.yml``. If not, please remember to terminate the server when you don't need it anymore.
 
+3.2: Using ASIS
+***********
+Running **ASIS** is much easier than **BSIS**, while you would need to have a **Route 53** domain ready.
+
+Here is an example of setting up **BSIS**:
+
+.. code-block:: bash
+
+    conda activate shiny_aws_bsis
+    export CDK_PATH=shiny_aws/infras/asis/shiny_asg
+    start_asis --workdir /tmp/asis --domain www.mot.link --ami ami-06618c31796bff2cb --region ap-southeast-2 --cdk $CDK_PATH
+
+After this we should be able to view our Shiny application at ``www.mot.link`` (Details can be found in `here <https://shiny-aws-doc.readthedocs.io/en/latest/ASIS.html>`_)
