@@ -45,7 +45,7 @@ def setup_parser():
         help="BSIS configuration file path")
 
     return parser.parse_args(
-        # ["--cfg", "etc/cfg/bsis_mot.yml", "--workdir", "bsis_run"]
+        # ["--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/bsis_mot_fleet.yml", "--workdir", "/tmp/bsis_run"]
     )
 
 

@@ -5,3 +5,4 @@ hello_world_mot
 spot_spec_mot.json
 *.pem
 *.swp
+*.pyc
