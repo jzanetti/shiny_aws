@@ -86,7 +86,8 @@ def setup_parser():
         "--zone",
         required=False,
         default=None,
-        help="Zone name and ID to be used(e.g., '(xxx-yyy.link, Z12345abcde)'), if None, a new zone will be created")
+        help="Zone name and ID to be used (e.g., '(xxx-yyy.link, Z12345abcde)'), "
+             "if None, a new zone will be created")
 
     parser.add_argument(
         "--create_zone", 
@@ -99,6 +100,7 @@ def start_asis():
     args = setup_parser()
 
     cdk_suite = copy_asg_suite(args.cdk, args.workdir)
+
     update_cdk_json(
         cdk_suite, 
         args.uuid, 
@@ -106,6 +108,7 @@ def start_asis():
         args.region, 
         args.zone,
         args.create_zone)
+
     call(
         ['./asis_trigger.sh'], 
         cwd = join(args.workdir, basename(args.cdk)),
