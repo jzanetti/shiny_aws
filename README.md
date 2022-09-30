@@ -1,5 +1,7 @@
 # A scalable Shiny infrastructure on AWS
 
+<img src="etc/shiny_aws_logo.PNG" alt="drawing" width="350"/>
+
 The system helps to construct an AWS based infrastructure for hosting [Shiny](https://shiny.rstudio.com/) applications:
 - the Basic Shiny Infrastructure Suite (BSIS) which contains:
    - An EC2 instance (from spot market or on-demand)
