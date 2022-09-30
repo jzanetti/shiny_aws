@@ -110,8 +110,7 @@ Here is an example of setting up **BSIS**:
 
     conda activate shiny_aws
     export CDK_PATH=shiny_aws/infras/asis/shiny_asg
-    start_asis --workdir /tmp/asis --ami ami-06618c31796bff2cb --region ap-southeast-2 --cdk $CDK_PATH --uuid hello-world-test --zone '(mot-dev.li
-nk, Z0778680205QCZAT4YE40)'
+    start_asis --workdir /tmp/asis --ami ami-06618c31796bff2cb --region ap-southeast-2 --cdk $CDK_PATH --uuid hello-world-test --zone '(mot-dev.link, Z0778680205QCZAT4YE40)'
 
 Note that the above will use an existing hosted zone (name: ``mod-dev.link``, ID: ``Z0778680205QCZAT4YE40``).
 
