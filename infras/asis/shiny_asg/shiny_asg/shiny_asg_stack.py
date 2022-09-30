@@ -41,7 +41,11 @@ class ShinyAsgStack(Stack):
         # ------------------------------
         # Step 3: connect LB to route 53
         # ------------------------------
-        zone = self.__create_hosted_zone()
+        if self.__config["route53"]["zone"]["create_new"]:
+            zone = self.__create_hosted_zone()
+        else:
+            zone = self.__query_hosted_zone()
+
         self.__create_a_record(lb, zone)
 
     def __create_a_record(self, lb, zone):
@@ -55,12 +59,19 @@ class ShinyAsgStack(Stack):
         )
 
 
+    def __query_hosted_zone(self):
+        return aws_route53.HostedZone.from_hosted_zone_attributes(
+            self,
+            id = self.__apply_status_and_region(self.__config["route53"]["zone"]["id"]), 
+            hosted_zone_id = self.__config["route53"]["zone"]["zone_id"],
+            zone_name = self.__config["route53"]["zone"]["zone_name"])
+
 
     def __create_hosted_zone(self):
         return aws_route53.PublicHostedZone(
             self, 
-            self.__apply_status_and_region(self.__config["route53"]["hosted_domain"]["id"]),
-            zone_name=self.__apply_status_and_region(self.__config["route53"]["hosted_domain"]["name"]))
+            self.__apply_status_and_region(self.__config["route53"]["zone"]["zone_id"]),
+            zone_name=self.__apply_status_and_region(self.__config["route53"]["zone"]["zone_name"]))
 
     def __get_userdata(self):
         data = open("./cloud-init.sh", "rb").read()
@@ -152,7 +163,7 @@ class ShinyAsgStack(Stack):
 
     def __apply_status_and_region(self, str_input):
         return str_input.format(
-            status=self.__config["common"]["status"],
+            # status=self.__config["common"]["status"],
             region=self.__config["common"]["region"],
             uuid=self.__config["common"]["uuid"]
         )

@@ -34,7 +34,7 @@
     "common": {
       "region": "ap-southeast-2",
       "uuid": "r-shiny-asg",
-      "ami": "ami-06618c31796bff2cb"
+      "ami": "ami-12345"
     },
     "sg": {
       "asg": {
@@ -75,13 +75,15 @@
       "subnet": "shiny_asg_subnet-{uuid}"
     },
     "route53": {
-      "hosted_domain": {
-        "id": "shiny_hosted_domain-{uuid}",
-        "name": "mot-dev"
+      "zone": {
+        "create_new": false,
+        "id": "shiny_hosted_zone-{uuid}",
+        "zone_name": "test-zone",
+        "zone_id": "Z-test"
       },
       "record": {
         "id": "shiny_route53_record-{uuid}",
-        "name": "www.mot-dev.link"
+        "name": "record-test"
       }
     }
   }

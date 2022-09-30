@@ -89,7 +89,7 @@ Here we use an example **BSIS** configuration (at ``etc/cfg/bsis.yml``) to bring
 
 .. code-block:: bash
 
-    conda activate shiny_aws_bsis
+    conda activate shiny_aws
     start_bsis --cfg etc/cfg/bsis.yml --workdir /tmp/bsis_exp
 
 Note that you will need to update ``etc/cfg/bsis.yml`` accordingly based on your own circumstance (e.g., the 5 elements listed above).
@@ -108,8 +108,11 @@ Here is an example of setting up **BSIS**:
 
 .. code-block:: bash
 
-    conda activate shiny_aws_bsis
+    conda activate shiny_aws
     export CDK_PATH=shiny_aws/infras/asis/shiny_asg
-    start_asis --workdir /tmp/asis --domain www.mot.link --ami ami-06618c31796bff2cb --region ap-southeast-2 --cdk $CDK_PATH
+    start_asis --workdir /tmp/asis --ami ami-06618c31796bff2cb --region ap-southeast-2 --cdk $CDK_PATH --uuid hello-world-test --zone '(mot-dev.li
+nk, Z0778680205QCZAT4YE40)'
+
+Note that the above will use an existing hosted zone (name: ``mod-dev.link``, ID: ``Z0778680205QCZAT4YE40``).
 
 After this we should be able to view our Shiny application at ``www.mot.link`` (Details can be found in `here <https://shiny-aws-doc.readthedocs.io/en/latest/ASIS.html>`_)

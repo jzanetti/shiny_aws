@@ -1,7 +1,6 @@
 """
 Usage: start_asis
             --workdir /tmp/asis
-            --domain www.mot.link
             --ami ami-xxxx
             --region us-west-2
             [--cdk infras/asis/shiny_asg]
@@ -16,13 +15,15 @@ Debug:
     export PYTHONPATH=/home/szhang/Github/shiny_aws:$PYTHONPATH
 
     with input arguments:
-        [
-            "--workdir", "/tmp/asis", 
-            "--cdk", "/home/szhang/Github/shiny_aws/infras/asis/shiny_asg", 
-            "--ami", "ami-06618c31796bff2cb",
-            "--region", "ap-southeast-2",
-            "--domain", "www.mot-dev.link"
-        ]
+        return parser.parse_args(
+            [
+                "--workdir", "/tmp/asis", 
+                "--cdk", "/home/szhang/Github/shiny_aws/infras/asis/shiny_asg", 
+                "--ami", "ami-06618c31796bff2cb",
+                "--region", "ap-southeast-2",
+                "--uuid", "r-shiny-asg",
+                "--zone", "(mot-dev.link, Z0778680205QCZAT4YE40)",
+            ]
 """
 
 import argparse
@@ -36,11 +37,12 @@ def get_example_usage():
     example_text = """example:
         * start_asis
             --workdir /tmp/asis
-            --domain www.mot.link
             --ami ami-xxx
             --region us-west-2
             [--cdk infras/asis/shiny_asg]
             [--uuid test]
+            [--zone "(xxx-yyy.link, Z12345xyz)"]
+            [--create_zone]
         """
     return example_text
 
@@ -57,12 +59,6 @@ def setup_parser():
         "--workdir",
         required=True,
         help="working directory")
-
-    parser.add_argument(
-        "--domain",
-        required=True,
-        default="www.xxx.com",
-        help="Domain name to be used")
 
     parser.add_argument(
         "--ami",
@@ -86,21 +82,30 @@ def setup_parser():
         default="r-shiny-asg",
         help="suite ID, e.g., r-shiny-asg")
 
-    return parser.parse_args(
-        # [
-        #    "--workdir", "/tmp/asis", 
-        #    "--cdk", "/home/szhang/Github/shiny_aws/infras/asis/shiny_asg", 
-        #    "--ami", "ami-06618c31796bff2cb",
-        #    "--region", "ap-southeast-2",
-        #    "--domain", "www.mot-dev.link"
-        # ]
-    )
+    parser.add_argument(
+        "--zone",
+        required=False,
+        default=None,
+        help="Zone name and ID to be used(e.g., '(xxx-yyy.link, Z12345abcde)'), if None, a new zone will be created")
+
+    parser.add_argument(
+        "--create_zone", 
+        help="create a new zone",
+        action="store_true")
+
+    return parser.parse_args()
 
 def start_asis():
     args = setup_parser()
 
     cdk_suite = copy_asg_suite(args.cdk, args.workdir)
-    update_cdk_json(cdk_suite, args.uuid, args.domain, args.ami, args.region)
+    update_cdk_json(
+        cdk_suite, 
+        args.uuid, 
+        args.ami, 
+        args.region, 
+        args.zone,
+        args.create_zone)
     call(
         ['./asis_trigger.sh'], 
         cwd = join(args.workdir, basename(args.cdk)),

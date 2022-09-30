@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo "test"
-. $CONDA_PREFIX/etc/profile.d/conda.sh
+echo "asis trigger script ..."
+. $CONDA_PREFIX/../../etc/profile.d/conda.sh
 which python
 conda deactivate
 conda activate base

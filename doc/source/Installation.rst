@@ -36,9 +36,9 @@ Install BSIS
 
    make bsis
 
-The ``makefile`` file will call ``meta.yaml``, ``setup.py`` and ``env.yml``, and create a conda environment ``shiny_aws_bsis``, which contains all the dependancies.
+The ``makefile`` file will call ``meta.yaml``, ``setup.py`` and ``env.yml``, and create a conda environment ``shiny_aws``, which contains all the dependancies.
 
-The **BSIS** environment can be activated as ``conda activate shiny_aws_bsis``
+The **BSIS** environment can be activated as ``conda activate shiny_aws``
 
 
 Install ASIS

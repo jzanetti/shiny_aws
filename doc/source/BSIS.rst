@@ -63,11 +63,11 @@ An full example for the **BSIS** configuration can be found at ``etc/cfg/bsis.ym
 
 Deployment
 ------
-The **BSIS** can be deployed under the environment ``shiny_aws_bsis``:
+The **BSIS** can be deployed under the environment ``shiny_aws``:
 
 .. code-block:: bash
 
-   conda activate shiny_aws_bsis
+   conda activate shiny_aws
    start_bsis --cfg /tmp/bsis.yml --workdir /tmp
 
 Where ``--cfg`` is the configuration for **BSIS** and ``--workdir`` is the working directory holds all the intermediate files.

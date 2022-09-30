@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" Setup for rainsat"""
+""" Setup for shiny_aws"""
 from glob import glob
 
 from setuptools import find_packages, setup
@@ -14,7 +14,7 @@ def main():
         description="Shiny application infras (BSIS)",
         maintainer="Sijin",
         maintainer_email="zsjzyhzp@gmail.com",
-        name="shiny_aws_bsis",
+        name="shiny_aws",
         packages=find_packages(),
         data_files=[
             ("etc/cfg", glob("etc/cfg/*")),
