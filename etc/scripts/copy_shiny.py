@@ -54,41 +54,9 @@ def copy_shiny():
     shiny_app_s3 = args.dest_dir.strip("/")
 
     cmd = f"aws s3 sync {shiny_app_local} {shiny_app_s3}"
-    p = Popen(cmd, shell=True)
-    p.communicate()
+    print(cmd)
+    fid = Popen(cmd, shell=True)
+    fid.communicate()
 
 if __name__ == "__main__":
     copy_shiny()
-
-
-
-
-
-
-
-
-
-
-
-
-# -------------------------------
-# shiny_app_local: local shiny application directory
-# shiny_app_s3: shiny application on S3
-# -------------------------------
-shiny_app_local = "../examples/hello_world_mot"
-shiny_app_s3 = "s3://mot-shiny-app/examples"
-
-# -------------------------------
-# Codes start from here
-# -------------------------------
-shiny_name = basename(shiny_app_local)
-all_files = glob(f"{shiny_app_local}/*")
-
-for proc_file in all_files:
-    proc_file = Path(proc_file)
-    if proc_file.suffix in [".R", ".sh", ".conf", ".md"]:
-        proc_filename = proc_file.name
-        cmd = f"aws s3 cp {proc_file} {shiny_app_s3}/{shiny_name}/{proc_filename}"
-        print(cmd)
-        p = Popen(cmd, shell=True)
-        p.communicate()
