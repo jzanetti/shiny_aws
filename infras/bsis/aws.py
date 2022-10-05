@@ -127,7 +127,7 @@ def create_infras(workdir: str, cfg: dict) -> str:
     output_json = update_spot_spec(workdir, user_data, spot_spec_path)
 
     cmd = ( "aws ec2 request-spot-instances "
-            f"--spot-price {cfg['aws']['spot_price']} "
+            f"--spot-price {cfg['user']['spot_price']} "
             "--instance-count 1 "
             f"--launch-specification file://{output_json}")
     p = Popen([cmd], shell=True)

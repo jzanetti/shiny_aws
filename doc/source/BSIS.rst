@@ -47,12 +47,19 @@ For **aws**, we need to provide usual AWS configurations such as ``VPC``, ``subn
                VolumeType: gp2
                DeleteOnTermination: true
                VolumeSize: 15
+
+
+Note that we will have to provide a few **user** defined parameters:
+
+.. code-block:: bash
+
+      user:
          elastic_ip: eipalloc-xxxxxxxxx
          lifespan: 15
          authentication: true
          spot_price: 0.1
 
-Note that there are a few optional parameters in the configuration:
+Where:
 
 - ``elastic_ip``: this can be set to ``null`` if we don't want to use AWS Elastic IP
 - ``lifespan``: this indicates how long the instance will be active (in minutes). If it is set to `null` then the instance will not be terminated.

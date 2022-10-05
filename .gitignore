@@ -6,3 +6,4 @@ spot_spec_mot.json
 *.pem
 *.swp
 *.pyc
+.vscode
