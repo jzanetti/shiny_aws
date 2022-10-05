@@ -28,7 +28,7 @@ def customized_userdata(workdir: str, cfg: dict) -> str:
 
     with open(dest_path, "a") as fid:
         
-        if cfg["aws"]["authentication"]:
+        if cfg["user"]["authentication"]:
             fid.write("\nsudo service nginx stop")
             fid.write("\nsudo systemctl stop shiny-server")
             fid.write("\nsudo sed -i '/listen 80;/c\listen 3838 127.0.0.1;' /etc/shiny-server/shiny-server.conf")
@@ -38,12 +38,12 @@ def customized_userdata(workdir: str, cfg: dict) -> str:
             fid.write("\nsudo service nginx stop")
             fid.write("\nsudo systemctl restart shiny-server")
 
-        if cfg["aws"]["elastic_ip"] is not None:
+        if cfg["user"]["elastic_ip"] is not None:
             fid.write(f"\nexport instance_id=`cat /var/lib/cloud/data/instance-id`")
-            fid.write(f"\nsudo aws ec2 associate-address --instance-id $instance_id --allocation-id {cfg['aws']['elastic_ip']}")
+            fid.write(f"\nsudo aws ec2 associate-address --instance-id $instance_id --allocation-id {cfg['user']['elastic_ip']}")
         
-        if cfg["aws"]["lifespan"] is not None: # lifespan is noted as minutes
-            fid.write(f"\nsudo shutdown -h +{cfg['aws']['lifespan']} >> /tmp/shundown.log 2>&1")
+        if cfg["user"]["lifespan"] is not None: # lifespan is noted as minutes
+            fid.write(f"\nsudo shutdown -h +{cfg['user']['lifespan']} >> /tmp/shundown.log 2>&1")
     
     return dest_path
 
@@ -98,12 +98,11 @@ def write_base_spot_spec(workdir: str, cfg: dict) -> str:
         str: written spot spec file
     """
     spot_spec = deepcopy(cfg["aws"])
-    for proc_key in ["elastic_ip", "lifespan", "authentication", "spot_price"]:
-        del spot_spec[proc_key]
 
     base_spot_spec_file = join(workdir, "base_spot_spec.json")
     with open(base_spot_spec_file, 'w') as fid:
         json_dump(spot_spec, fid)
+
     return base_spot_spec_file
 
 

@@ -5,7 +5,7 @@ This page contains the instructions about how to install **SHINY_AWS**
 
 Prerequisite
 ------
-Tools like ``conda`` (for BSIS) and ``cdk`` (for ASIS) are required for installing **SHINY_AWS**. Please install them before the instruction or contact your Linux administor
+Tools like ``conda`` and ``cdk`` are required for installing **SHINY_AWS**. Please install them before the instruction or contact your Linux administor
 
 conda Installation
 ^^^^^^^^^
@@ -30,17 +30,16 @@ The AWS CDK `[link] <https://docs.aws.amazon.com/cdk/v2/guide/home.html>`_ lets 
 
 Install BSIS
 ------
-**BSIS** can be simply install with the provided ``makefile`` in the repository:
+**SHINY_AWS** can be simply install with the provided ``makefile`` in the repository:
 
 .. code-block:: bash
 
-   make bsis
+   make all
 
-The ``makefile`` file will call ``meta.yaml``, ``setup.py`` and ``env.yml``, and create a conda environment ``shiny_aws``, which contains all the dependancies.
+The ``makefile`` file will call ``meta.yaml``, ``requirements.txt``, ``setup.py`` and ``env.yml``, and create a conda environment ``shiny_aws``, which contains all the dependancies.
 
-The **BSIS** environment can be activated as ``conda activate shiny_aws``
+The working environment then can be activated as ``conda activate shiny_aws``
 
+.. note::
 
-Install ASIS
-------
-TBA
+   The user may need to edit ``makefile`` and adapt the path of ``conda`` within it.
