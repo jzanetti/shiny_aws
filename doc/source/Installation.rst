@@ -28,9 +28,9 @@ The AWS CDK `[link] <https://docs.aws.amazon.com/cdk/v2/guide/home.html>`_ lets 
 - step 3: then **cdk** can be easily installed as ``npm install -g aws-cdk``
 
 
-Install BSIS
-------
-**SHINY_AWS** can be simply install with the provided ``makefile`` in the repository:
+SHINY_AWS Installation
+^^^^^^^^^
+After ``conda`` and ``cdk``, **SHINY_AWS** can be simply installed with the provided ``makefile`` in the repository:
 
 .. code-block:: bash
 
