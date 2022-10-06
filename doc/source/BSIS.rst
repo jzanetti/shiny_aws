@@ -61,8 +61,7 @@ Note that we will have to provide a few **user** defined parameters:
 
 Where:
 
-- ``elastic_ip``: this can be set to ``null`` if we don't want to use AWS Elastic IP
-- ``lifespan``: this indicates how long the instance will be active (in minutes). If it is set to `null` then the instance will not be terminated.
+- ``elastic_ip``: this can be set to ``null`` if we don't want to use AWS Elastic IP.
 - ``authentication``: we can set up authentication (using `Nginx <https://www.nginx.com/>`_) for our server (setup for ``nginx`` can be found :ref:`shiny_aws_auth`.).
 - ``spot_price``: Spot price we are willing to pay in the EC2 spot market.
 
