@@ -135,5 +135,6 @@ def create_infras(workdir: str, cfg: dict, lifespan: str) -> str:
             f"--spot-price {cfg['user']['spot_price']} "
             "--instance-count 1 "
             f"--launch-specification file://{output_json}")
+    print(cmd)
     p = Popen([cmd], shell=True)
     p.communicate()
