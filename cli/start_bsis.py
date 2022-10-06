@@ -1,5 +1,5 @@
 """
-Usage: start_bsis --cfg /tmp/bsis.yml --workdir /tmp
+Usage: start_bsis --cfg /tmp/bsis.yml --workdir /tmp [--lifespan 120]
 
 Author: Sijin Zhang
 

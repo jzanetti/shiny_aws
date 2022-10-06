@@ -30,7 +30,11 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str) -> str:
     system(f"aws s3 cp {src_path} {dest_path}")
 
     with open(dest_path, "a") as fid:
-        
+
+        shiny_name = cfg["shiny"]["name"]
+        fid.write(f"\nexport instance_id=`cat /var/lib/cloud/data/instance-id`")
+        fid.write(f"\naws ec2 create-tags --resources $instance_id --tag Key=Name,Value='{shiny_name}'")
+
         if cfg["user"]["authentication"]:
             fid.write("\nsudo service nginx stop")
             fid.write("\nsudo systemctl stop shiny-server")
@@ -42,13 +46,12 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str) -> str:
             fid.write("\nsudo systemctl restart shiny-server")
 
         if cfg["user"]["elastic_ip"] is not None:
-            fid.write(f"\nexport instance_id=`cat /var/lib/cloud/data/instance-id`")
             fid.write(f"\nsudo aws ec2 associate-address --instance-id $instance_id --allocation-id {cfg['user']['elastic_ip']}")
         
         if lifespan != UNLIMITED_LIFESPAN_FLAG: # lifespan is noted as minutes
             lifespan = int(lifespan)
             fid.write(f"\nsudo shutdown -h +{lifespan} >> /tmp/shundown.log 2>&1")
-    
+
     return dest_path
 
 
