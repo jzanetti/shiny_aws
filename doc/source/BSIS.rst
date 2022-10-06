@@ -56,7 +56,6 @@ Note that we will have to provide a few **user** defined parameters:
 
       user:
          elastic_ip: eipalloc-xxxxxxxxx
-         lifespan: 15
          authentication: true
          spot_price: 0.1
 
@@ -76,8 +75,11 @@ The **BSIS** can be deployed under the environment ``shiny_aws``:
 .. code-block:: bash
 
    conda activate shiny_aws
-   start_bsis --cfg /tmp/bsis.yml --workdir /tmp
+   start_bsis --cfg /tmp/bsis.yml --workdir /tmp --lifespan 60
 
-Where ``--cfg`` is the configuration for **BSIS** and ``--workdir`` is the working directory holds all the intermediate files.
+Where ``--cfg`` is the configuration for **BSIS** and ``--workdir`` is the working directory holds all the intermediate files. 
+``lifespan`` indicates how long the instance will be active (in minutes). By default, ``lifespan`` is 60 minutes, while 
+in production we can set it to `unlimited` (e.g., being defined by `UNLIMITED_LIFESPAN_FLAG`). Please set ``lifespan`` 
+carefully since AWS charges us every seconds we use the server.
 
 After the deployment, we should be able to find an EC2 instance in the console with the shiny application being installed.
