@@ -18,7 +18,7 @@ import argparse
 
 from infras.bsis import DEFAULT_LIFESPAN_MINS
 from infras.bsis.aws import create_infras
-from infras.bsis.utils import read_cfg
+from infras.bsis.utils import obtain_cfg_name, read_cfg
 
 
 def get_example_usage():
@@ -55,17 +55,16 @@ def setup_parser():
              "to UNLIMITED_LIFESPAN_FLAG")
 
     return parser.parse_args(
-        # ["--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/bsis_mot_fleet.yml", "--workdir", "/tmp/bsis"]
+        # ["--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/bsis_mot.yml", "--workdir", "/tmp/bsis"]
     )
 
 
-def main(workdir: str, cfg: dict, lifespan: str):
-    create_infras(workdir, cfg, lifespan)
+def main(workdir: str, cfg: dict, lifespan: str, cfg_name: str):
+    create_infras(workdir, cfg, lifespan, cfg_name)
 
 def start_bsis():
     args = setup_parser()
-    cfg = read_cfg(args.cfg)
-    main(args.workdir, cfg, args.lifespan)
+    main(args.workdir, read_cfg(args.cfg), args.lifespan, obtain_cfg_name(args.cfg))
 
 if __name__ == "__main__":
     start_bsis()
