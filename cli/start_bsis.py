@@ -55,7 +55,7 @@ def setup_parser():
              "to UNLIMITED_LIFESPAN_FLAG")
 
     return parser.parse_args(
-        # ["--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/bsis_mot.yml", "--workdir", "/tmp/bsis"]
+        # ["--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/bsis.yml", "--workdir", "/tmp/bsis"]
     )
 
 

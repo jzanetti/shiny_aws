@@ -17,7 +17,7 @@ Shiny applications hierarchy
       - ....
       - <shiny app N>
 
-where ``<shiny app ..>`` is a directory contains all the necessary setups for a individual shiny application. ``shiny-server.conf`` is the shiny server configuration file
+where ``<shiny app ..>`` is a directory contains all the necessary setups for an individual shiny application. ``shiny-server.conf`` is the shiny server configuration file
 
 
 Shiny application basis
@@ -27,11 +27,11 @@ As above, ``<shiny app ..>`` is a directory contains an independant shiny applic
 
 - ``ui.R``: the frontend design
 - ``server.R``: the backend server
-- ``cloud-init``: user data for AWS
+- ``cloud-init.sh``: user data for AWS
 
-``ui.R`` and ``server.R`` are common Shiny files that are needed for any Shiny deployment, while ``cloud-init`` is specific for AWS, which is used to provide additional user inputs for initializing an AWS instance.
+``ui.R`` and ``server.R`` are common Shiny files that are needed for any Shiny deployment, while ``cloud-init.sh`` is specific for AWS, which is used to provide additional user inputs for initializing an AWS instance.
 
-An minimum example for ``cloud-init`` is shown below
+An minimum example for ``cloud-init.sh`` is shown below
 
 .. code-block:: bash
 

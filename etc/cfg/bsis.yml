@@ -1,7 +1,9 @@
 shiny: 
-  name: hello_world
-  s3: s3://xxxxxxx-shiny-app/r
-  userdata: cloud-init.sh
+  names: 
+    - hello_world
+  url: https://github.com/jzanetti/shiny_aws_examples.git
+  branch: main
+  cred: null
 
 user:
   elastic_ip: null

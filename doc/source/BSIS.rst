@@ -13,19 +13,41 @@ For **BSIS**, there are two main sections in the configuration
   - **user**: user sepecfic information
   - **aws**: AWS specific setups
 
-For **shiny**, we need to define where the Shiny application comes from. Note that all Shiny applications used in **BSIS** must be uploaded to S3 beforehand. How to create a Shiny on S3 can be obtained `here <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_.
+Configuration (Shiny):
+^^^^^^^^^^^
+For **shiny**, we need to define where the Shiny application comes from. How to create a Shiny on S3 can be obtained `here <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_.
 
 An simple example is given below:
 
 .. code-block:: bash
 
    shiny: 
-      name: hello_world
-      s3: s3://xxxxxxx-shiny-app/r
-      userdata: cloud-init.sh
+      names: 
+         - hello_world
+      url: https://github.com/jzanetti/shiny_aws_examples.git
+      branch: main
+      cred: null
 
-The above provides some basic shiny information. The instance will be brought up by using the user data ``cloud-init.sh``, 
-and the shiny application from ``s3://xxxxxxx-shiny-app/r/hello_world``.
+The above provides some basic shiny information: 
+   - the Shiny server takes the ``main`` branch from ``https://github.com/jzanetti/shiny_aws_examples.git``. 
+   - ``hello_world`` is the only application we want to host.
+   - there is no credentials needed
+
+For private repository we can apply a private token to access the repository. For example, we can have the credentials to access the repository as below:
+
+.. code-block:: bash
+
+   shiny: 
+      names: 
+         - hello_world
+      url: https://github.com/jzanetti/shiny_aws_examples.git
+      branch: main
+      cred:     
+         user: <user-name>
+         token: <token>
+
+Configuration (AWS):
+^^^^^^^^^^^
 
 For **aws**, we need to provide usual AWS configurations such as ``VPC``, ``subnets`` and the ``ami`` to be used. An example is given below:
 
