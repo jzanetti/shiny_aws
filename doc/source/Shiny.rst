@@ -17,8 +17,9 @@ Shiny applications hierarchy
       - ....
       - <shiny app N>
 
-where ``<shiny app ..>`` is a directory contains all the necessary setups for an individual shiny application. ``shiny-server.conf`` is the shiny server configuration file
+where ``<shiny app ..>`` is a directory contains all the necessary setups for an individual shiny application. ``shiny-server.conf`` is the shiny server configuration file.
 
+An example for the shiny application repository can be accessed `here <https://github.com/jzanetti/shiny_aws_examples>`_.
 
 Shiny application basis
 ------
