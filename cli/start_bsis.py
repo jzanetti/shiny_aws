@@ -18,7 +18,7 @@ import argparse
 
 from infras.bsis import DEFAULT_LIFESPAN_MINS
 from infras.bsis.aws import create_infras
-from infras.bsis.utils import obtain_cfg_name, read_cfg
+from infras.utils import obtain_cfg_name, read_cfg
 
 
 def get_example_usage():

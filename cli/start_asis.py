@@ -1,10 +1,7 @@
 """
 Usage: start_asis
             --workdir /tmp/asis
-            --ami ami-xxxx
-            --region us-west-2
-            [--cdk infras/asis/shiny_asg]
-            [--uuid test]
+            --cfg etc/asis.yml
 
 Author: Sijin Zhang
 
@@ -13,36 +10,21 @@ Description:
 
 Debug:
     export PYTHONPATH=/home/szhang/Github/shiny_aws:$PYTHONPATH
-
-    with input arguments:
-        return parser.parse_args(
-            [
-                "--workdir", "/tmp/asis", 
-                "--cdk", "/home/szhang/Github/shiny_aws/infras/asis/shiny_asg", 
-                "--ami", "ami-06618c31796bff2cb",
-                "--region", "ap-southeast-2",
-                "--uuid", "r-shiny-asg",
-                "--zone", "(mot-dev.link, Z0778680205QCZAT4YE40)",
-            ]
 """
 
 import argparse
-from os.path import basename, join
+from os.path import basename
 from subprocess import call
 
-from infras.asis.utils import copy_asg_suite, update_cdk_json
+from infras.asis.aws import copy_asg_suite, update_cdk_json, update_cloud_init
+from infras.utils import read_cfg
 
 
 def get_example_usage():
     example_text = """example:
         * start_asis
             --workdir /tmp/asis
-            --ami ami-xxx
-            --region us-west-2
-            [--cdk infras/asis/shiny_asg]
-            [--uuid test]
-            [--zone "(xxx-yyy.link, Z12345xyz)"]
-            [--create_zone]
+            --cfg etc/asis_mot.yml
         """
     return example_text
 
@@ -54,64 +36,39 @@ def setup_parser():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-
     parser.add_argument(
         "--workdir",
         required=True,
         help="working directory")
 
     parser.add_argument(
-        "--ami",
+        "--cfg",
         required=True,
-        help="base image AMI ID")
+        help="ASIS configuration file path")
 
-    parser.add_argument(
-        "--region",
-        required=True,
-        help="AWS region")
+    return parser.parse_args(
+        # [
+        #    "--workdir", "/tmp/asis",
+        #    "--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/asis_mot.yml",
+        # ]
+    )
 
-    parser.add_argument(
-        "--cdk",
-        required=False,
-        default="infras/asis/shiny_asg",
-        help="CDK directory")
-
-    parser.add_argument(
-        "--uuid",
-        required=False,
-        default="r-shiny-asg",
-        help="suite ID, e.g., r-shiny-asg")
-
-    parser.add_argument(
-        "--zone",
-        required=False,
-        default=None,
-        help="Zone name and ID to be used (e.g., '(xxx-yyy.link, Z12345abcde)'), "
-             "if None, a new zone will be created")
-
-    parser.add_argument(
-        "--create_zone", 
-        help="create a new zone",
-        action="store_true")
-
-    return parser.parse_args()
 
 def start_asis():
     args = setup_parser()
 
-    cdk_suite = copy_asg_suite(args.cdk, args.workdir)
+    cdk_suite = copy_asg_suite(args.workdir)
 
-    update_cdk_json(
-        cdk_suite, 
-        args.uuid, 
-        args.ami, 
-        args.region, 
-        args.zone,
-        args.create_zone)
+    cfg = read_cfg(args.cfg)
+    uuid = basename(args.cfg).replace(".yml", "").replace("_", "-")
+
+    update_cloud_init(args.workdir, cdk_suite, cfg)
+
+    update_cdk_json(cdk_suite, uuid, cfg)
 
     call(
         ['./asis_trigger.sh'], 
-        cwd = join(args.workdir, basename(args.cdk)),
+        cwd = cdk_suite,
         shell=True)
 
     print("done")

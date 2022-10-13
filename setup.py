@@ -19,6 +19,12 @@ def main():
         data_files=[
             ("etc/cfg", glob("etc/cfg/*")),
             ("etc/examples/hello_world", glob("etc/examples/hello_world/*")),
+            ("infras/asis/shiny_asg", glob("infras/asis/shiny_asg/*.sh")),
+            ("infras/asis/shiny_asg", glob("infras/asis/shiny_asg/*.json")),
+            ("infras/asis/shiny_asg", glob("infras/asis/shiny_asg/*.pem")),
+            ("infras/asis/shiny_asg", glob("infras/asis/shiny_asg/*.py")),
+            ("infras/asis/shiny_asg/shiny_asg", glob("infras/asis/shiny_asg/shiny_asg/*")),
+            ("infras/asis/shiny_asg/lambda", glob("infras/asis/shiny_asg/lambda/*")),
         ],
         zip_safe=False,
     )
