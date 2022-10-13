@@ -20,7 +20,7 @@ from infras.base.aws import make_ami
 def get_example_usage():
     example_text = """example:
         * make_base --cloud_init /tmp/cloud-init.sh
-                    --cloud_init /tmp/spot_spec.sh
+                    --spot_spec /tmp/spot_spec.sh
                     --ami_name ami_test
         """
     return example_text
