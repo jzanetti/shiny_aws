@@ -71,8 +71,10 @@ For **aws**, we need to provide usual AWS configurations such as ``VPC``, ``subn
                DeleteOnTermination: true
                VolumeSize: 15
 
+Configuration (user):
+^^^^^^^^^^^
 
-Note that we will have to provide a few **user** defined parameters:
+We will have to provide a few **user** defined parameters:
 
 .. code-block:: bash
 

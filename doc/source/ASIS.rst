@@ -8,22 +8,39 @@ An **ASIS** can be implemented as:
 
 .. code-block:: bash
 
-   start_asis --workdir <WORKING DIRECTORY> 
-              --ami <AMI ID>
-              --region <AWS REGION> 
-              [--cdk <ASIS CDK DIRECTORY>]
-              [--uuid <STACK UNIQUE ID>]
-              [--zone <ZONE INFORMATION>]
-              [--create_zone]
+    start_asis
+            --workdir <WORKING DIRECTORY> 
+            --cfg <ASIS CONFIGURATION>
 
-where ``--workdir`` is the working directory (where the source `ASIS CDK` will be copied to), ``ami`` is the AMI ID for the base image 
-and ``region`` represents the AWS region to be used.
 
-Optionally, we can provide the source `ASIS CDK` directory (via ``--cdk``), and the unique ID ``--uuid``.
-Also, we can choose whether we want to create a new hosted zone (e.g., by setting ``--create_zone``) in `Route 53` or use an existing one. 
-The zone information should be defined in ``--zone``.
+where ``--workdir`` is the working directory (where the source `ASIS CDK` will be copied to), ``cfg`` is the ASIS configuration file
 
-For example, ``start_asis --workdir /tmp/asis --ami ami-12345 --region us-west-2 --cdk infras/asis/shiny_asg --uuid r-shiny-asg --zone (xxx.com, Z123abc) --create_zone``
+The configuration for **ASIS** is similar to **BSIS**, while it only contains two sessions ``shiny`` and ``aws``.
+
+The ``shiny`` session contains the information about where is the shiny application repository (and the credentials to access it if needed). 
+``aws`` includes the base image ``AMI``, ``region`` and ``route53`` setup if we need it.
+
+An simple example is shown below:
+
+.. code-block:: bash
+
+    shiny: 
+        names: 
+            - hello_world_1
+            - hello_world_2
+        url: https://gitlab.com/test-12345/mot_shiny_dev.git
+        branch: main
+        cred:
+            user: <user name>
+            token: <token>
+
+    aws: 
+        ami: ami-xxxxx
+        region: ap-southeast-2
+    route53:
+        create_new: false
+        domain_name: test.come
+        zone_id: Zxxx-yyy-zzzz
 
 **It is worthwhile to note that it might take quite a while for Route 53 traffic to be updated, before that we should use the Application Load Balancer DNS to access the Shiny application**
 
