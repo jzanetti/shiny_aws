@@ -12,6 +12,7 @@ build:
   entry_points:
     - start_bsis = cli.start_bsis:start_bsis
     - start_asis = cli.start_asis:start_asis
+    - make_base = cli.make_base:start_base
 
 requirements:
   build:

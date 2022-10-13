@@ -12,13 +12,6 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 
-# install all required R libraries
-sudo R -e 'install.packages(c("tidyr", "DT", "ggplot2", "reshape2", "lubridate", "markdown"))'
-
-# install tidyverse
-sudo apt-get install libcurl4-openssl-dev libgit2-dev libxml2-dev libssl-dev libudunits2-dev libpoppler-cpp-dev -y
-sudo R -e 'install.packages(c("tidyverse"), dependencies = TRUE)'
-
 # install leaflet
 sudo apt-get install libgdal-dev -y
 sudo R -e 'install.packages(c("leaflet", "sf"))'

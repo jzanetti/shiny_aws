@@ -17,6 +17,7 @@ def main():
         name="shiny_aws",
         packages=find_packages(),
         data_files=[
+            ("etc/aws", glob("etc/aws/*")),
             ("etc/cfg", glob("etc/cfg/*")),
             ("etc/examples/hello_world", glob("etc/examples/hello_world/*")),
             ("infras/asis/shiny_asg", glob("infras/asis/shiny_asg/*.sh")),

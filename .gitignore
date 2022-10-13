@@ -8,4 +8,5 @@ spot_spec_mot.json
 *.swp
 *.pyc
 .vscode
-etc/cfg/asis_mot.yml
+asis_mot.yml
+cloud-init-mot.sh
