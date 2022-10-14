@@ -6,40 +6,19 @@ This page provides an **end-to-end** instruction about how to deploy ``hello_wor
 
 Step 1 (optional): Create a customized AMI:
 """""""""
-Optionally, we can create a customized AMI to **pre-install** all the required dependancies.
-
-1.1: Bring up an instance with all dependancies
-***********
-
-First we need to bring up an instance (with all the needed dependancies defined in ``cloud-init.sh``). A script for doing so can be found in ``etc/scripts/create_base.py``.
-Please update ``cloud_init`` (user data), ``spot_spec_path`` (instance defination) and ``spot_price`` (the price you are willing to pay) accrodingly.
+Optionally, we can create a customized AMI to **pre-install** all the required dependancies. The command is:
 
 .. code-block:: bash
 
-    cloud_init = "etc/scripts/cloud-init.sh"
-    spot_spec_path = "etc/scripts/spot_spec.json"
-    spot_price = 0.1
+    conda activate shiny_aws
+    make_base --cloud_init etc/aws/cloud-init.sh --spot_spec etc/aws/spot_spec.json --ami_name ami_test_v2.0 --expected_duration 30 --overwrite_ami
+
+The above will create an AMI with name ``ami_test_v2.0``.
 
 .. note::
 
-    In order to create your own AMI, for **BSIS** you will need to ask your AWS administor to provide ``SecurityGroupIds`` and ``SubnetId``. A base AMI (e.g., a Basic Linux AMI from AWS) is also needed.
+    In order to create your own AMI, you will need to ask your AWS administor to provide ``SecurityGroupIds`` and ``SubnetId``. A base AMI (e.g., a Basic Linux AMI from AWS) is also needed.
     All of these should be configured within ``spot_spec.json``
-
-1.2: Make an AMI
-***********
-
-After we have an instance running with all the dependancies, we can use ``etc/scripts/create_ami.py`` to make an AMI. In order to do so, the following paramters are to be adjusted:
-
-.. code-block:: bash
-
-    instance_id = "id-12312312"
-    ami_name = "shiny_aws_ami"
-
-where ``instance_id`` represents the instance that being brought up at **Step 1.1**, and ``ami_name`` is your AMI ID to be used on AWS.
-
-.. note::
-
-    After the AMI being made, please remember to terminate the instance from **Step 1.1**
 
 Details about making an customized AMI can be accessed `here <https://shiny-aws-doc.readthedocs.io/en/latest/Customized_AMI.html>`_
 

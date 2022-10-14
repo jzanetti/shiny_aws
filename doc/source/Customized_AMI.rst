@@ -1,7 +1,7 @@
 Customized AMI
 =============
 
-We can create a customized AMI to include all the necessary dependancies. Two simple scripts ``etc/scripts/create_base.py`` and ``etc/scripts/create_ami.py`` are provided to create the base image.
+We can create a customized AMI to include all the necessary dependancies.
 
 .. note::
 
@@ -22,16 +22,23 @@ An example of ``cloud-init.sh`` is shown below:
     #!/bin/bash
 
     sudo apt-get update
+    sudo apt install unzip
+
+    # install awscli
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+
+    # create tag
+    export instance_id=`cat /var/lib/cloud/data/instance-id`
+    sudo aws ec2 create-tags --resources $instance_id --tag Key=Name,Value='base_image'
+
     sudo apt install gdebi-core
     sudo apt-get install r-base -y
     sudo apt-get install r-base-dev -y
     sudo su - -c "R -e \"install.packages('shiny', repos='http://cran.rstudio.com/')\""
     wget https://download3.rstudio.org/ubuntu-18.04/x86_64/shiny-server-1.5.18.987-amd64.deb
     sudo gdebi -n shiny-server-1.5.18.987-amd64.deb
-
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip awscliv2.zip
-    sudo ./aws/install
 
     # install all required R libraries
     sudo R -e 'install.packages(c("tidyr", "DT", "ggplot2", "reshape2", "lubridate", "markdown"))'
@@ -56,14 +63,17 @@ Deploying the instance with the base image is very simple, we just need to run:
 
 .. code-block:: bash
 
-    python create_base.py
+    make_base --cloud_init <CLOUD_INIT> 
+              --spot_spec <SPOT_SPEC> 
+              --ami_name <AMI_NAME> 
+              --expected_duration <EXPECTED_DURATION> 
+              [--overwrite_ami]
 
-In addition to the locations of configurations, we also need to specify how much we are willing to pay for the spot instance.
+where ``<CLOUD_INIT>`` is the cloud init file, and ``<SPOT_SPEC> `` describes the instance spot. ``<AMI_NAME>`` is the AMI name to be applied. 
+``<EXPECTED_DURATION>`` is the expected time that we need to make the AMI, and ``--overwrite_ami`` will overwrite the AMI if it exists.
 
-After the instance being brought up, we need to make an AMI as:
+One example for creating the base image is:
 
 .. code-block:: bash
 
-    python create_ami.py
-
-Note that after the deployment, we will need to terminate the instance manually.
+    make_base --cloud_init etc/aws/cloud-init.sh --spot_spec etc/aws/spot_spec.json --ami_name ami_test_v2.0 --expected_duration 3 --overwrite_ami
