@@ -3,16 +3,43 @@ from json import dump as json_dump
 from json import load as json_load
 from os import remove, system
 from os.path import basename, join
-from subprocess import Popen
+from subprocess import PIPE, Popen
+from time import sleep
 
 
-def get_cloud_init(cloud_init_path: str, ami_name: str, expected_baking_mins: str) -> str:
+def check_ami(ami_name: str, overwrite_ami: bool):
+    """Check if an AMI exists
+
+    Args:
+        ami_name (str): check if an AMI exists
+        overwrite_ami (bool): if overwrite AMI if exists
+
+    Raises:
+        Exception: AMI exits ...
+    """
+    cmd = ('aws ec2 describe-images '
+            '--query "Images[*].[ImageId]" '
+            f'--filters "Name=name,Values={ami_name}" '
+            '--output text')
+    process = Popen([cmd], shell=True, stdout=PIPE)
+    ami_id = process.communicate()[0]
+
+    if len(ami_id) > 0:
+        if overwrite_ami:
+            ami_id = ami_id.decode("utf-8").replace("\n", "")
+            cmd = f"aws ec2 deregister-image --image-id {ami_id}"
+            system(cmd)
+        else:
+            raise Exception(f"{ami_name} exists, you may want to overwrite the AMI")
+    
+
+
+def get_cloud_init(cloud_init_path: str, ami_name: str) -> str:
     """Get cloud init 
 
     Args:
         cloud_init_path (str): Cloud init path
         ami_name (str): AMI name to be used
-        expected_baking_mins (str): expected baking minutes. Defaults to 30.
 
     Returns:
         str: decoded cloud init
@@ -22,18 +49,9 @@ def get_cloud_init(cloud_init_path: str, ami_name: str, expected_baking_mins: st
     system(f"cp -rf {cloud_init_path} {cloud_init_local}")
 
     with open(cloud_init_local, "a") as fid:
-        # add instance name
-        fid.write(f"\n\n# adding instance name ...")
-        fid.write(f"\nexport instance_id=`cat /var/lib/cloud/data/instance-id`")
-        fid.write(f"\naws ec2 create-tags --resources $instance_id --tag Key=Name,Value='base_image'")
-
-        # make ami
         fid.write(f"\n\n# making AMI ...")
+        fid.write(f"\nexport instance_id=`cat /var/lib/cloud/data/instance-id`")
         fid.write(f"\naws ec2 create-image --instance-id $instance_id --name {ami_name}")
-
-        # shutdown the instance
-        fid.write(f"\n\n# shutting down EC2 ...")
-        fid.write(f"\nsudo shutdown -h +{expected_baking_mins} >> /tmp/shundown.log 2>&1")
 
     with open(cloud_init_local, "rb") as fid:
         encoded_string = b64encode(fid.read())
@@ -44,18 +62,17 @@ def get_cloud_init(cloud_init_path: str, ami_name: str, expected_baking_mins: st
 
     return decoded_string
 
-def make_ami(cloud_init_path: str, spot_spec_path: str, ami_name: str, spot_price: float = 0.1, expected_baking_mins: str = 30):
+def make_ami(cloud_init_path: str, spot_spec_path: str, ami_name: str, spot_price: float = 0.1):
     """Start a base instance
 
     Args:
         cloud_init_path (str): cloud init path to be used
         spot_spec_path (str): spot spec path to be used
         ami_name (str): AMI name to be used
-        spot_price (float, optional): spot instance price to pay. Defaults to 0.1.
-        expected_baking_mins (str, optional): expected baking minutes. Defaults to 30.
+        spot_price (float, optional): spot instance price to pay. Defaults to 0.1
     """
 
-    decoded_string = get_cloud_init(cloud_init_path, ami_name, expected_baking_mins) 
+    decoded_string = get_cloud_init(cloud_init_path, ami_name) 
 
     with open(spot_spec_path) as fid:
         spot_spec = json_load(fid)
@@ -75,3 +92,31 @@ def make_ami(cloud_init_path: str, spot_spec_path: str, ami_name: str, spot_pric
     p.communicate()
     remove(output_json)
 
+def shutdown_instance(expected_duration: str, query_interval_sec: int = 10):
+    """Shutdown instance
+
+    Args:
+        expected_duration (str): expected duration for making AMI
+    """
+    stdout = ""
+    while len(stdout) == 0:
+        print("looking for instance ...")
+        cmd = ('aws ec2 describe-instances '
+            f'--filters "Name=tag:Name,Values=base_image" '
+            'Name=instance-state-name,Values=running '
+            '--query "Reservations[*].Instances[*].[InstanceId]" '
+            '--output text')
+
+        process = Popen([cmd], shell=True, stdout=PIPE)
+        stdout = process.communicate()[0]
+        sleep(query_interval_sec)
+
+    instance_id = stdout.decode("utf-8").replace("\n", "")
+
+    print(f"instance {instance_id} will be shut down in {expected_duration} minutes ...")
+
+    sleep(int(expected_duration) * 60.0)
+
+    cmd = f"aws ec2 terminate-instances --instance-ids {instance_id}"
+
+    system(cmd)
