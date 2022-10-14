@@ -9,6 +9,27 @@ from infras.utils import (create_git_url, download_base_repository,
                           get_app_dependant_cloud_init)
 
 
+def write_trigger(suite_dir: str) -> str:
+    """write trigger script
+
+    Args:
+        suite_dir (str): cdk suite directory
+    """
+    trigger_path = join(suite_dir, "asis_trigger.sh")
+
+    with open(trigger_path, "w") as fid:
+        fid.write("#!/bin/sh")
+
+        fid.write("\n\n# start trigger ...")
+        fid.write(f"\necho 'asis trigger script ...'")
+        fid.write(f"\n. $CONDA_PREFIX/../../etc/profile.d/conda.sh")
+        fid.write(f"\nconda deactivate")
+        fid.write(f"\nconda activate shiny_aws")
+        fid.write(f"\ncd {suite_dir}")
+        fid.write(f"\ncdk deploy --require-approval never")
+    
+    return trigger_path
+
 def copy_asg_suite(workdir: str) -> str:
     """Copying the asg CDK suite to a working directory
 

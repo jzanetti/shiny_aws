@@ -16,7 +16,8 @@ import argparse
 from os.path import basename
 from subprocess import call
 
-from infras.asis.aws import copy_asg_suite, update_cdk_json, update_cloud_init
+from infras.asis.aws import (copy_asg_suite, update_cdk_json,
+                             update_cloud_init, write_trigger)
 from infras.utils import read_cfg
 
 
@@ -59,7 +60,10 @@ def start_asis():
 
     cdk_suite = copy_asg_suite(args.workdir)
 
+    trigger_path = write_trigger(cdk_suite)
+
     cfg = read_cfg(args.cfg)
+
     uuid = basename(args.cfg).replace(".yml", "").replace("_", "-")
 
     update_cloud_init(args.workdir, cdk_suite, cfg)
@@ -67,7 +71,7 @@ def start_asis():
     update_cdk_json(cdk_suite, uuid, cfg)
 
     call(
-        ['./asis_trigger.sh'], 
+        [f'./{basename(trigger_path)}'], 
         cwd = cdk_suite,
         shell=True)
 

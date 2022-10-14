@@ -34,7 +34,8 @@
     "common": {
       "region": "ap-southeast-2",
       "uuid": "r-shiny-asg",
-      "ami": "ami-12345"
+      "ami": "ami-12345",
+      "instance_type": "t2.medium"
     },
     "sg": {
       "asg": {

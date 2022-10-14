@@ -5,6 +5,7 @@ env:
 	rm -rf $(CONDA_BASE)/envs/shiny_aws
 	$(CONDA) env create -f env.yml
 	$(CONDA_BASE)/envs/shiny_aws/bin/pip install -r requirements.txt
+	$(CONDA_BASE)/envs/shiny_aws/bin/npm install -g aws-cdk --prefix $(CONDA_BASE)/envs/shiny_aws
 
 build:
 	$(CONDA) build .

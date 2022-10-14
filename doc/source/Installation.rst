@@ -3,7 +3,7 @@ Installation
 
 This page contains the instructions about how to install **SHINY_AWS**
 
-Tools like ``conda`` and ``cdk`` are required for installing **SHINY_AWS**. Please install them before the instruction or contact your Linux administor
+The package management tool ``conda`` is required for installing **SHINY_AWS**. Please install it before the instruction or contact your Linux administor
 
 CONDA Installation
 ^^^^^^^^^
@@ -15,20 +15,9 @@ CONDA Installation
 After the installation, **CONDA** environment can be activated using ``conda activate <env>``
 
 
-CDK Installation
-^^^^^^^^^
-The AWS **CDK** `[link] <https://docs.aws.amazon.com/cdk/v2/guide/home.html>`_ lets you build reliable, scalable, cost-effective applications in the cloud with the considerable expressive power of a programming language.
-
-**CDK** can be installed as below:
-
-- **step 1**: install ``PMN`` and ``Node`` (note that ``Node`` must have a version larger than `v12+`)
-- **step 2**: install ``python`` (if you don't have one)
-- **step 3**: then **cdk** can be easily installed as ``npm install -g aws-cdk``
-
-
 SHINY_AWS Installation
 ^^^^^^^^^
-After ``conda`` and ``cdk``, **SHINY_AWS** can be simply installed with the provided ``makefile`` in the repository:
+After ``conda``, **SHINY_AWS** can be simply installed with the provided ``makefile`` in the repository:
 
 .. code-block:: bash
 

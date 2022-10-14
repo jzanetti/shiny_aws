@@ -131,7 +131,7 @@ class ShinyAsgStack(Stack):
                 self.__config["asg"]["name"]),
             role=role,
             vpc=vpc,
-            instance_type=ec2.InstanceType(instance_type_identifier="t2.micro"),
+            instance_type=ec2.InstanceType(instance_type_identifier=self.__config["common"]["instance_type"]),
             machine_image=linux_ami,
             key_name=self.__config["asg"]["key_name"],
             security_group=sg,
