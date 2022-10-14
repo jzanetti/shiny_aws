@@ -138,7 +138,8 @@ class ShinyAsgStack(Stack):
             desired_capacity=self.__config["asg"]["capacity"]["desired"],
             max_capacity=self.__config["asg"]["capacity"]["max"],
             min_capacity=self.__config["asg"]["capacity"]["min"],
-            user_data=user_data
+            user_data=user_data,
+            spot_price=str(self.__config["common"]["spot_price"])
             )
 
         asg.scale_on_cpu_utilization(
