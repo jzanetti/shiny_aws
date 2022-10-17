@@ -6,7 +6,7 @@ This page provides an **end-to-end** instruction about how to deploy ``hello_wor
 
 Step 1: Load the environment:
 """""""""
-First we need to load the **SHINY_AWS0** working environment:
+First we need to load the **SHINY_AWS** working environment:
 
 .. code-block:: bash
 
@@ -30,7 +30,7 @@ The above will create an AMI with name ``ami_test_v2.0``.
 Details about making an customized AMI can be accessed `here <https://shiny-aws-doc.readthedocs.io/en/latest/Customized_AMI.html>`_
 
 
-Step 3: Shiny application on S3
+Step 3: Shiny application on AWS
 """""""""
 
 3.1: Create a shiny app locally:
@@ -50,14 +50,12 @@ There are three components in this application:
 
 Details about creating a Shiny application for **SHINY_AWS** can be accessed `here <https://shiny-aws-doc.readthedocs.io/en/latest/Shiny.html>`_
 
-Step 3: Bring up the Shiny online
-"""""""""
-
 As we discussed before, there are two ways that we can bring up a shiny application online: **BSIS** and **ASIS**. 
 For general development purpose, using **BSIS** is recommended, while **ASIS** should be adopted for operational usage.
 
-3.1: Using BSIS
+3.2: Using BSIS
 ***********
+
 Before we start a BSIS infrastructure, please make sure that you have the following ready:
 
 - A customized AMI or the basic AWS linux AMI (made by **Step 1**, see details from `here <https://shiny-aws-doc.readthedocs.io/en/latest/Customized_AMI.html>`_)
@@ -86,7 +84,7 @@ After this we should be able to view our Shiny application either though the aut
 
     Note that it is always a good practice to set the lifespan for the shiny application in ``bsis.yml``. If not, please remember to terminate the server when you don't need it anymore.
 
-3.2: Using ASIS
+3.3: Using ASIS
 ***********
 Running **ASIS** is much easier than **BSIS**, while you would need to have your **Route 53** domain ready.
 
@@ -99,7 +97,7 @@ Here is an example of setting up **BSIS**:
 
 Similar to **BSIS**, we will need to adjust the ``aws`` section within ``etc/cfg/asis.yml``:
 
-- ``ami`: the base Image ID (created by **Step 1**)
+- ``ami``: the base Image ID (created by **Step 1**)
 - ``region``: the AWS region to be used
 - ``route53``: Route 53 information including the ``domain_name`` and ``zone_id``
 
