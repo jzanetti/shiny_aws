@@ -29,6 +29,7 @@ def show_publicip(name: str):
     """
     cmd = ('aws ec2 describe-instances '
             f'--filters "Name=tag:Name,Values={name}" '
+            'Name=instance-state-name,Values=running '
             '--query "Reservations[*].Instances[*].[PublicIpAddress]" '
             '--output text')
     process = Popen([cmd], shell=True, stdout=PIPE)
