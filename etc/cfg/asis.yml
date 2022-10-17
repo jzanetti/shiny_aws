@@ -1,0 +1,14 @@
+shiny: 
+  names: 
+    - hello_world
+  url: https://github.com/jzanetti/shiny_aws_examples.git
+  branch: main
+  cred: null
+
+aws: 
+  ami: ami-xxxxxxxxxxxxxxx
+  region: ap-southeast-2
+  route53:
+    create_new: false
+    domain_name: xxx-dev.com
+    zone_id: Z0XXXXXX
