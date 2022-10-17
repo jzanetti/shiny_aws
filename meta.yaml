@@ -23,4 +23,3 @@ requirements:
     - python>=3.9
     - pyyaml
     - nodejs
-    - awscliv2
