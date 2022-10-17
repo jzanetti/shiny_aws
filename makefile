@@ -1,5 +1,9 @@
-override CONDA_BASE = ~/Programs/miniconda3
+# override CONDA_BASE = ~/Programs/miniconda3
+# override CONDA_BASE = ${CONDA_BASE}
 override CONDA = $(CONDA_BASE)/bin/conda
+
+help:
+	echo $(CONDA_BASE)
 
 env:
 	rm -rf $(CONDA_BASE)/envs/shiny_aws
