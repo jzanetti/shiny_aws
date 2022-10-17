@@ -4,7 +4,7 @@ Welcome to SHINY_AWS
 .. image:: shiny_aws_logo.PNG
    :width: 450
 
-**SHINY_AWS** is an open-source repository that constructs an cloud (AWS) based infrastructure for hosting `Shiny <https://shiny.rstudio.com/>`_ applications (or potentially any visualization & analytical interactive UI applications). 
+**SHINY_AWS** is an open-source repository that constructs a cloud (AWS) based infrastructure for hosting `Shiny <https://shiny.rstudio.com/>`_ applications (or potentially any visualization & analytical interactive UI applications). 
 There are two suites in the repository:
 
 - the Basic Shiny Infrastructure Suite (BSIS):
