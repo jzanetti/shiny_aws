@@ -13,6 +13,7 @@ build:
     - start_bsis = cli.start_bsis:start_bsis
     - start_asis = cli.start_asis:start_asis
     - make_base = cli.make_base:start_base
+    - app_utils = cli.app_utils:app_utils_func
 
 requirements:
   build:
@@ -22,3 +23,4 @@ requirements:
     - python>=3.9
     - pyyaml
     - nodejs
+    - awscliv2

@@ -78,7 +78,8 @@ Note that we will need to update the following parameters in ``etc/cfg/bsis.yml`
 - ``SubnetId``: Subnet ID (can be obtained from AWS administor)
 - ``IamInstanceProfile``: IAM profile for Shiny (can be obtained from AWS administor)
 
-After this we should be able to view our Shiny application either though the automatically assigned public IP or the elastic IP defined in ``bsis.yml``.
+After this we should be able to view our Shiny application either though the automatically assigned public IP or the elastic IP defined in ``bsis.yml``. 
+We can use the provided `Utilities <https://shiny-aws-doc.readthedocs.io/en/latest/Utilities.html>`_ to obtain the IP address.
 
 .. note::
 
