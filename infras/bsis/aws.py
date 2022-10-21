@@ -23,10 +23,11 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
         str: output cloud-init.sh
     """
 
-    repo_url = create_git_url(cfg["shiny"])
-    repo_dir = download_base_repository(workdir, repo_url)
-    repo_name = basename(repo_dir)
-    app_cloud_init = get_app_dependant_cloud_init(repo_dir, cfg["shiny"]["names"])
+    if cfg["shiny"] is not None:
+        repo_url = create_git_url(cfg["shiny"])
+        repo_dir = download_base_repository(workdir, repo_url)
+        repo_name = basename(repo_dir)
+        app_cloud_init = get_app_dependant_cloud_init(repo_dir, cfg["shiny"]["names"])
 
     cloud_init_path = join(workdir, "cloud-init.sh")
 
@@ -50,37 +51,38 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
             fid.write(f"\n\n# adding life span ...")
             fid.write(f"\nsudo shutdown -h +{lifespan} >> /tmp/shundown.log 2>&1")
 
-        # clone the repository
-        fid.write(f"\n\n# cloning the repository ...")
-        fid.write(f"\ncd /tmp; git clone {repo_url}; "
-                  f"git config --global --add safe.directory /tmp/{repo_name}; "
-                  f"git checkout {cfg['shiny']['branch']}")
+        if cfg["shiny"] is not None:
+            # clone the repository
+            fid.write(f"\n\n# cloning the repository ...")
+            fid.write(f"\ncd /tmp; git clone {repo_url}; "
+                    f"git config --global --add safe.directory /tmp/{repo_name}; "
+                    f"git checkout {cfg['shiny']['branch']}")
 
-        # install renv
-        fid.write(f"\n\n# install renv libs ...")
-        for shiny_app in cfg["shiny"]["names"]:
-            checkout_shiny_app = join('/tmp', repo_name, shiny_app)
-            if exists(join(workdir, repo_name, shiny_app, "renv.lock")):
-                fid.write(f'\ncd {checkout_shiny_app}; Rscript -e "renv::restore();renv::isolate()"; ')
+            # install renv
+            fid.write(f"\n\n# install renv libs ...")
+            for shiny_app in cfg["shiny"]["names"]:
+                checkout_shiny_app = join('/tmp', repo_name, shiny_app)
+                if exists(join(workdir, repo_name, shiny_app, "renv.lock")):
+                    fid.write(f'\ncd {checkout_shiny_app}; Rscript -e "renv::restore();renv::isolate()"; ')
 
-        # add shiny
-        fid.write(f"\n\n# adding shiny applications ...")
-        fid.write(f"\nsudo mkdir -p /srv/shiny-server/myapp")
-        for shiny_app in cfg["shiny"]["names"]:
-            checkout_shiny_app = join('/tmp', repo_name, shiny_app)
-            fid.write(f"\nsudo cp -rf {checkout_shiny_app} /srv/shiny-server/myapp/{shiny_app}")
-            fid.write(f"\nsudo chmod -R 777 /srv/shiny-server/myapp/{shiny_app}")
+            # add shiny
+            fid.write(f"\n\n# adding shiny applications ...")
+            fid.write(f"\nsudo mkdir -p /srv/shiny-server/myapp")
+            for shiny_app in cfg["shiny"]["names"]:
+                checkout_shiny_app = join('/tmp', repo_name, shiny_app)
+                fid.write(f"\nsudo cp -rf {checkout_shiny_app} /srv/shiny-server/myapp/{shiny_app}")
+                fid.write(f"\nsudo chmod -R 777 /srv/shiny-server/myapp/{shiny_app}")
 
-        # add application dependant requirements:
-        fid.write(f"\n\n# adding application dependant requirements ...")
-        for shiny_app in app_cloud_init:
-            fid.write("\n")
-            for proc_cloud_init_line in app_cloud_init[shiny_app]:
-                fid.write(proc_cloud_init_line)
+            # add application dependant requirements:
+            fid.write(f"\n\n# adding application dependant requirements ...")
+            for shiny_app in app_cloud_init:
+                fid.write("\n")
+                for proc_cloud_init_line in app_cloud_init[shiny_app]:
+                    fid.write(proc_cloud_init_line)
 
-        # add shiny-server:
-        fid.write(f"\n\n# adding shiny-server ...")
-        fid.write(f"\nsudo cp -rf /tmp/{repo_name}/shiny-server.conf /etc/shiny-server")
+            # add shiny-server:
+            fid.write(f"\n\n# adding shiny-server ...")
+            fid.write(f"\nsudo cp -rf /tmp/{repo_name}/shiny-server.conf /etc/shiny-server")
 
         # add authentication and start shiny
         fid.write(f"\n\n# adding authentication and starting shiny ...")

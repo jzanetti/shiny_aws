@@ -11,3 +11,4 @@ spot_spec_mot.json
 asis_mot.yml
 cloud-init-mot.sh
 bsis_mot_hello_world_env.yml
+bsis_mot_from_ami.yml
