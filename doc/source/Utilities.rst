@@ -26,3 +26,9 @@ For example, we can use the following command to shutdown a shiny application ca
 .. code-block:: bash
 
     app_utils --job terminate --name test_shiny
+
+.. note::
+
+    ``app_utils --job makeami --name <SHINY APPLICATION NAME>`` can be used to make an AMI out of a running instance.
+    This is very useful especially if we rely on ``renv`` to install dependancies ~ it usually takes very long to complete and
+    install them every time when we need to bring up a new instance is really a pain (e.g., in **ASIS**)

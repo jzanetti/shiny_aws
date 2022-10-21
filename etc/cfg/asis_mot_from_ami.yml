@@ -1,0 +1,9 @@
+shiny: null
+
+aws: 
+  ami: ami-07b0719f6bf68f488
+  region: ap-southeast-2
+  route53:
+    create_new: false
+    domain_name: mot-dev.link
+    zone_id: Z0778680205QCZAT4YE40
