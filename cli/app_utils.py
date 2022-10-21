@@ -18,7 +18,7 @@ from infras.apputils.aws import run_utils
 
 def get_example_usage():
     example_text = """example:
-        * app_utils --job showip/terminate --name bsis_shiny_example
+        * app_utils --job showip/terminate/makeami --name bsis_shiny_example
         """
     return example_text
 
@@ -42,7 +42,7 @@ def setup_parser():
         help="the application name to be used")
 
     return parser.parse_args(
-        # ["--job", "showip", "--name", "bsis_mot_example"]
+        # ["--job", "makeami", "--name", "bsis_mot_example_renv"]
     )
 
 
