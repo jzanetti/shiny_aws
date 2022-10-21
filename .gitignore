@@ -10,3 +10,4 @@ spot_spec_mot.json
 .vscode
 asis_mot.yml
 cloud-init-mot.sh
+bsis_mot_hello_world_env.yml

@@ -42,3 +42,34 @@ An minimum example for ``cloud-init.sh`` is shown below
 The above example does two things: (1) copying the Shiny application from S3 to an AWS instance, and (2) putting the server configuration in the required location.
 
 During the shiny server deployment, ``<shiny app ..>`` will be checked out through ``git clone`` so it can be picked up by the server in an AWS EC2 instance.
+
+Renv
+------
+
+In many applications, dependancies are installed via ``renv``. However, when deploy the application with **Shiny Server**, 
+it uses the global system library path to use packages. 
+This brings inconvenience when we need to host multiple shiny applications (with different required versions of libraries) within one server.
+
+.. note::
+
+    By default, ``renv`` creates project libraries that CANNOT be moved to a different machine or even user account, 
+    due to its reliance on a global cache that sits outside of the project directory. 
+    This is exactly the behavior that you want if you're doing local development.
+
+In order to apply ``renv`` to each application, on top of the usual shiny files (e.g., ``ui.R``, ``server.R`` and ``cloud-init.sh``), 
+**Shiny_AWS** requires the application directory contains a full ``renv`` structure. For example:
+
+.. code-block:: bash
+
+    renv
+        activate.R
+        settings.dcf
+    .Rprofile
+    <project name>.Rproj
+    renv.lock
+
+.. note::
+
+    The above ``renv`` related structure is created using ``renv::init()`` during development
+
+An example of the shiny application with ``renv`` can be accessed `here <https://github.com/jzanetti/shiny_aws_examples/tree/master/hello_world_renv>`_.
