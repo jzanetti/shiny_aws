@@ -37,10 +37,10 @@ An simple example is shown below:
     aws: 
         ami: ami-xxxxx
         region: ap-southeast-2
-    route53:
-        create_new: false
-        domain_name: test.come
-        zone_id: Zxxx-yyy-zzzz
+        route53:
+            create_new: false
+            domain_name: test.come
+            zone_id: Zxxx-yyy-zzzz
 
 **It is worthwhile to note that it might take quite a while for Route 53 traffic to be updated, before that we should use the Application Load Balancer DNS to access the Shiny application**
 
