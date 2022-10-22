@@ -106,6 +106,9 @@ def update_cloud_init(workdir: str, cdk_suite: str, cfg: dict) -> str:
             fid.write(f"\n\n# adding shiny-server ...")
             fid.write(f"\nsudo cp -rf /tmp/{repo_name}/shiny-server.conf /etc/shiny-server")
 
+        # update shiny-server.conf (in case the ami is from bsis)
+        fid.write(f"\nsudo sed -i '/listen 3838 127.0.0.1;/c\listen 80;' /etc/shiny-server/shiny-server.conf")
+        
         # start shiny
         fid.write(f"\n\n# starting shiny ...") 
         fid.write("\nsudo service nginx stop")
