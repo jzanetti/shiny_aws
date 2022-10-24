@@ -22,9 +22,11 @@ After ``conda``, **SHINY_AWS** can be simply installed with the provided ``makef
 .. code-block:: bash
 
    export CONDA_BASE=<CONDA PATH>
-   make all
+   export PLATFORM=<PLATFORM TYPE>
+   sudo -E make all
 
-where ``CONDA_BASE`` is the path where the ``conda`` package is installed. For example, we can have ``export CONDA_BASE=~/Programs/miniconda3/``
+where ``CONDA_BASE`` is the path where the ``conda`` package is installed. For example, we can have ``export CONDA_BASE=~/Programs/miniconda3/``.
+``PLATFORM`` indicates which platform to be used, we should set it to either ``mac`` or ``linux``. 
 
 The ``makefile`` file collects information from ``meta.yaml``, ``requirements.txt``, ``setup.py`` and ``env.yml``, and creates a conda environment ``shiny_aws``, which contains all the dependancies.
 
