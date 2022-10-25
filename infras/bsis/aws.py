@@ -56,14 +56,18 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
             fid.write(f"\n\n# cloning the repository ...")
             fid.write(f"\ncd /tmp; git clone {repo_url}; "
                     f"git config --global --add safe.directory /tmp/{repo_name}; "
-                    f"git checkout {cfg['shiny']['branch']}")
+                    f"cd /tmp/{repo_name}; git checkout {cfg['shiny']['branch']}")
 
             # install renv
+            # note that renv::repair is needed if we migrate renv from one OS to another
+            # otherwise the error will be
+            #   "The following package(s) have broken symlinks into the cache"
+            # see details: https://github.com/rstudio/renv/issues/378
             fid.write(f"\n\n# install renv libs ...")
             for shiny_app in cfg["shiny"]["names"]:
                 checkout_shiny_app = join('/tmp', repo_name, shiny_app)
                 if exists(join(workdir, repo_name, shiny_app, "renv.lock")):
-                    fid.write(f'\ncd {checkout_shiny_app}; Rscript -e "renv::restore();renv::isolate()"; ')
+                    fid.write(f'\ncd {checkout_shiny_app}; sudo Rscript -e "renv::restore();renv::repair();renv::isolate()"; ')
 
             # add shiny
             fid.write(f"\n\n# adding shiny applications ...")
