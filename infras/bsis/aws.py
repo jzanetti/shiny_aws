@@ -58,25 +58,6 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
                     f"git config --global --add safe.directory /tmp/{repo_name}; "
                     f"cd /tmp/{repo_name}; git checkout {cfg['shiny']['branch']}")
 
-            # install renv
-            # note that renv::repair is needed if we migrate renv from one OS to another
-            # otherwise the error will be
-            #   "The following package(s) have broken symlinks into the cache"
-            # see details: https://github.com/rstudio/renv/issues/378
-            fid.write(f"\n\n# install renv libs ...")
-            for shiny_app in cfg["shiny"]["names"]:
-                checkout_shiny_app = join('/tmp', repo_name, shiny_app)
-                renv_lock_file = join(workdir, repo_name, shiny_app, "renv.lock")
-                if exists(renv_lock_file):
-                    private_pkgs = obtain_private_packages(renv_lock_file)
-
-                    if private_pkgs is None:
-                        restore_cmd = f"renv::restore(project='{checkout_shiny_app}')"
-                    else:
-                        restore_cmd = f"renv::restore(project='{checkout_shiny_app}', exclude={private_pkgs})"
-
-                    fid.write(f'\ncd {checkout_shiny_app}; Rscript -e "{restore_cmd};renv::repair();renv::isolate()"')
-            
             # add shiny
             fid.write(f"\n\n# adding shiny applications ...")
             fid.write(f"\nsudo mkdir -p /srv/shiny-server/myapp")
@@ -91,8 +72,27 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
             for shiny_app in app_cloud_init:
                 fid.write("\n")
                 for proc_cloud_init_line in app_cloud_init[shiny_app]:
-                    fid.write(f"cd /srv/shiny-server/myapp/{shiny_app}; {proc_cloud_init_line}")
+                    if not proc_cloud_init_line.startswith("#"):
+                        fid.write(f"cd /srv/shiny-server/myapp/{shiny_app}; {proc_cloud_init_line}")
 
+            # install renv
+            # note that renv::repair is needed if we migrate renv from one OS to another
+            # otherwise the error will be
+            #   "The following package(s) have broken symlinks into the cache"
+            # see details: https://github.com/rstudio/renv/issues/378
+            fid.write(f"\n\n# install renv libs ...")
+            for shiny_app in cfg["shiny"]["names"]:
+                shiny_app_path = join("/srv/shiny-server/myapp", shiny_app)
+                renv_lock_file = join(workdir, repo_name, shiny_app, "renv.lock")
+                if exists(renv_lock_file):
+                    private_pkgs = obtain_private_packages(renv_lock_file)
+
+                    if private_pkgs is None:
+                        restore_cmd = f"renv::restore(project='{shiny_app_path}')"
+                    else:
+                        restore_cmd = f"renv::restore(project='{shiny_app_path}', exclude={private_pkgs})"
+
+                    fid.write(f'\ncd {shiny_app_path}; sudo Rscript -e "{restore_cmd};renv::repair();renv::isolate()"')
 
             # add shiny-server:
             fid.write(f"\n\n# adding shiny-server ...")
