@@ -6,7 +6,7 @@ from os.path import basename, exists, join
 from shutil import copytree, rmtree
 
 from infras.utils import (create_git_url, download_base_repository,
-                          get_app_dependant_cloud_init)
+                          get_app_dependant_cloud_init, obtain_private_packages)
 
 
 def write_trigger(suite_dir: str) -> str:
@@ -88,8 +88,15 @@ def update_cloud_init(workdir: str, cdk_suite: str, cfg: dict) -> str:
             fid.write(f"\n\n# install renv libs ...")
             for shiny_app in cfg["shiny"]["names"]:
                 checkout_shiny_app = join('/tmp', repo_name, shiny_app)
-                if exists(join(workdir, repo_name, shiny_app, "renv.lock")):
-                    fid.write(f'\ncd {checkout_shiny_app}; sudo Rscript -e "renv::restore();renv::repair();renv::isolate()"')
+                renv_lock_file = join(workdir, repo_name, shiny_app, "renv.lock")
+                if exists(renv_lock_file):
+                    private_pkgs = obtain_private_packages(renv_lock_file)
+                    if private_pkgs is None:
+                        restore_cmd = f"renv::restore(project='{checkout_shiny_app}')"
+                    else:
+                        restore_cmd = f"renv::restore(project='{checkout_shiny_app}', exclude={private_pkgs})"
+
+                    fid.write(f'\ncd {checkout_shiny_app}; Rscript -e "{restore_cmd};renv::repair();renv::isolate()"')
 
             # add shiny
             fid.write(f"\n\n# adding shiny applications ...")
@@ -105,7 +112,7 @@ def update_cloud_init(workdir: str, cdk_suite: str, cfg: dict) -> str:
             for shiny_app in app_cloud_init:
                 fid.write("\n")
                 for proc_cloud_init_line in app_cloud_init[shiny_app]:
-                    fid.write(proc_cloud_init_line)
+                    fid.write(f"cd /srv/shiny-server/myapp/{shiny_app}; {proc_cloud_init_line}")
 
             # add shiny-server:
             fid.write(f"\n\n# adding shiny-server ...")

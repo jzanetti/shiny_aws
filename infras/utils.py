@@ -3,7 +3,9 @@ from os.path import basename, exists, join
 from shutil import rmtree
 
 from yaml import safe_load
+from json import load as json_load
 
+from infras import PRIVATE_PKHS
 
 def read_cfg(cfg_path: str):
     """Read configuration file
@@ -98,3 +100,40 @@ def get_app_dependant_cloud_init(repos_dir: str, app_names: list) -> dict:
                     app_cloud_init[app_name].append(line)
     
     return app_cloud_init
+
+
+def obtain_private_packages(renv_lock_file: str) -> list or None:
+    """Obtain private package that to be installed via renv.lock
+        Due to some unknown reasons (Oct 2022), we are not able to
+        install private packages (e.g., motplotr) through renv.restore(),
+        therefore we skip it in renv, and install it seperately ... 
+
+    Args:
+        renv_lock_file (str): renv.lock file path
+
+    Returns:
+        list or None: a list of existing private packages
+    """
+    existing_pkgs = []
+
+    with open(renv_lock_file) as fid:
+        pkgs = json_load(fid)["Packages"]
+
+    for private_pkg in PRIVATE_PKHS:
+
+        if private_pkg in pkgs:
+
+            existing_pkgs.append("'" + private_pkg + "'")
+
+    if len(existing_pkgs) == 0:
+        return None
+
+    return "c(" + ', '.join(existing_pkgs) + ")"
+
+
+
+
+    
+
+
+    
