@@ -23,9 +23,12 @@ clear_all:
 	rm -rf $(CONDA_BASE)/envs/$(PKG)
 	rm -rf $(CONDA_BASE)/pkgs/$(PKG)*
 	rm -rf $(CONDA_BASE)/conda-bld/linux-64/$(PKG)*
+	rm -rf $(CONDA_BASE)/conda-bld/osx-arm64/$(PKG)*
 	rm -rf $(CONDA_BASE)/conda-bld/$(PKG)*
 	rm -rf $(CONDA_BASE)/conda-bld/linux-64/.cache/paths/$(PKG)*
 	rm -rf $(CONDA_BASE)/conda-bld/linux-64/.cache/recipe/$(PKG)*
+	rm -rf $(CONDA_BASE)/conda-bld/osx-arm64/.cache/paths/$(PKG)*
+	rm -rf $(CONDA_BASE)/conda-bld/osx-arm64/.cache/recipe/$(PKG)*
 	$(CONDA) index $(CONDA_BASE)/conda-bld
 
 env: clear_all
