@@ -89,7 +89,7 @@ def update_cloud_init(workdir: str, cdk_suite: str, cfg: dict) -> str:
             for shiny_app in cfg["shiny"]["names"]:
                 checkout_shiny_app = join('/tmp', repo_name, shiny_app)
                 if exists(join(workdir, repo_name, shiny_app, "renv.lock")):
-                    fid.write(f'\ncd {checkout_shiny_app}; sudo Rscript -e "renv::restore();renv::repair();renv::isolate()"; ')
+                    fid.write(f'\ncd {checkout_shiny_app}; sudo Rscript -e "renv::restore();renv::repair();renv::isolate()"')
 
             # add shiny
             fid.write(f"\n\n# adding shiny applications ...")
