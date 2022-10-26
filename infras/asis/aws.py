@@ -96,6 +96,7 @@ def update_cloud_init(workdir: str, cdk_suite: str, cfg: dict) -> str:
             fid.write(f"\nsudo mkdir -p /srv/shiny-server/myapp")
             for shiny_app in cfg["shiny"]["names"]:
                 checkout_shiny_app = join('/tmp', repo_name, shiny_app)
+                fid.write(f"\nsudo rm -rf /srv/shiny-server/myapp/{shiny_app}")
                 fid.write(f"\nsudo cp -rf {checkout_shiny_app} /srv/shiny-server/myapp/{shiny_app}")
                 fid.write(f"\nsudo chmod -R 777 /srv/shiny-server/myapp/{shiny_app}")
 
