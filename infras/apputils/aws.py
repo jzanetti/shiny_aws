@@ -1,7 +1,8 @@
 
 
 
-from os import system
+from os import system, getcwd
+from os.path import join, exists
 from subprocess import PIPE, Popen
 
 from infras.base.aws import check_ami
@@ -20,9 +21,48 @@ def run_utils(job: str, name: str):
         show_publicip(name)
     elif job == "makeami":
         make_ami(name)
+    elif job == "check":
+        check_ip(name)
     else:
         raise Exception(f"job type {job} can not be performed ...")
 
+
+def check_ip(name: str, key_name = "shiny-ec2-key.pem"):
+    """Get into an instance 
+
+    Args:
+        job (str): job name, e.g., showip or terminate
+        key_path (str): public key name, e.g., shiny-ec2-key.pem
+    """
+
+    cwd = getcwd()
+    key_path = join(cwd, key_name)
+
+    if not exists(key_path):
+        raise Exception(f"not able to find {key_path}")
+
+    cmd = ('aws ec2 describe-instances '
+           f'--filters "Name=tag:Name,Values={name}" '
+           'Name=instance-state-name,Values=running '
+           '--query "Reservations[*].Instances[*].PublicDnsName" '
+           '--output text')
+
+    process = Popen([cmd], shell=True, stdout=PIPE)
+    stdout = process.communicate()[0]
+    instance_ids = stdout.decode("utf-8").replace("\n", ",")
+
+    instance_ids = list(filter(None, instance_ids.split(",")))
+
+    if len(instance_ids) > 1:
+        raise Exception(
+            f"More than one instances named {name}, "
+            "please check with your AWS admin ... ")
+
+    instance_id = instance_ids[0]
+
+    cmd = f"ssh -i {key_path} ubuntu@{instance_id}"
+    
+    system(cmd)
 
 def make_ami(name: str):
     """Making an AMI
@@ -37,7 +77,16 @@ def make_ami(name: str):
             '--output text')
     process = Popen([cmd], shell=True, stdout=PIPE)
     stdout = process.communicate()[0]
-    instance_id = stdout.decode("utf-8").replace("\n", "")
+    instance_ids = stdout.decode("utf-8").replace("\n", ",")
+
+    instance_ids = list(filter(None, instance_ids.split(",")))
+
+    if len(instance_ids) > 1:
+        raise Exception(
+            f"More than one instances named {name}, "
+            "please check with your AWS admin ... ")
+
+    instance_id = instance_ids[0]
 
     check_ami(name, True)
     cmd = (f"\naws ec2 create-image --instance-id {instance_id} --name {name}")
@@ -61,14 +110,15 @@ def show_publicip(name: str):
             '--output text')
     process = Popen([cmd], shell=True, stdout=PIPE)
     stdout = process.communicate()[0]
-
     if not len(stdout):
         raise Exception(f"there is no application/instance called {name} running, "
                         "probably retry in a few minutes ? ")
 
-    instance_ip = stdout.decode("utf-8").replace("\n", "")
+    instance_ips = stdout.decode("utf-8").replace("\n", ",")
 
-    print(f"please use {instance_ip} to access the shiny application {name} ...")
+    for i, instance_ip in enumerate(instance_ips.split(",")):
+        if len(instance_ip) > 0:
+            print(f"({i}) please use {instance_ip} to access the shiny application {name} ...")
 
 def shutdown_instance(name: str):
     """Shutdown instance
@@ -90,7 +140,17 @@ def shutdown_instance(name: str):
         raise Exception(f"there is no application/instance called {name} running, "
                         "probably retry in a few minutes ? ")
 
-    instance_id = stdout.decode("utf-8").replace("\n", "")
+    instance_ids = stdout.decode("utf-8").replace("\n", ",")
+
+    instance_ids = list(filter(None, instance_ids.split(",")))
+
+    if len(instance_ids) > 1:
+        raise Exception(
+            f"More than one instances named {name}, "
+            "please shut them down from the console, "
+            "or ask your AWS admin to do so")
+
+    instance_id = instance_ids[0]
 
     print(f"instance {instance_id} will be shut down ...")
 
