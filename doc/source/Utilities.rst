@@ -18,6 +18,7 @@ where:
     - ``showip``: showing the IP for the shiny application that can be accessed by the public
     - ``terminate``: terminating an shiny application
     - ``makeami``: making an AMI from an existing server (shiny application)
+    - ``check``: log into a shiny server
 
 - ``--name`` is the shiny application name to be described/updated. It is usually the configuration filename for the shiny application.
 
