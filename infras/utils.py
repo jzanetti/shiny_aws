@@ -54,7 +54,7 @@ def create_git_url(shiny_cfg: dict) -> str:
     return url_to_use
 
 
-def download_base_repository(workdir: str, url: str) -> str:
+def download_base_repository(workdir: str, url: str, branch: str) -> str:
     """Download the latest base repository
 
     Args:
@@ -70,7 +70,8 @@ def download_base_repository(workdir: str, url: str) -> str:
     if exists(local_repository_dir):
         rmtree(local_repository_dir)
 
-    cmd = f"cd {workdir}; git clone {url}"
+    git_name = basename(url).replace(".git", "")
+    cmd = f"cd {workdir}; git clone {url}; cd {git_name}; git checkout {branch}"
     system(cmd)
 
     return local_repository_dir

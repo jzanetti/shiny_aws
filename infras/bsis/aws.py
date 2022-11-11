@@ -25,7 +25,7 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
 
     if cfg["shiny"] is not None:
         repo_url = create_git_url(cfg["shiny"])
-        repo_dir = download_base_repository(workdir, repo_url)
+        repo_dir = download_base_repository(workdir, repo_url, cfg['shiny']['branch'])
         repo_name = basename(repo_dir)
         app_cloud_init = get_app_dependant_cloud_init(repo_dir, cfg["shiny"]["names"])
 
