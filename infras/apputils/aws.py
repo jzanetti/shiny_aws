@@ -22,23 +22,63 @@ def run_utils(job: str, name: str):
     elif job == "makeami":
         make_ami(name)
     elif job == "check":
-        check_ip(name)
+        login_via_ip(name)
     elif job == "info":
         cloud_info(name)
     else:
         raise Exception(f"job type {job} can not be performed ...")
 
 
-def cloud_info(name: str):
+def cloud_info(
+    name: str, 
+    key_name: str = "shiny-ec2-key.pem", 
+    cloud_init_tmp_file: str = "/tmp/cloud-init-output.log"):
     """Get cloud init information
 
     Args:
         job (str): job name, e.g., mot_dev_fleet
     """
-    x = 3
+    cwd = getcwd()
+    key_path = join(cwd, key_name)
+
+    if not exists(key_path):
+        raise Exception(f"not able to find {key_path}")
+
+    cmd = ('aws ec2 describe-instances '
+           f'--filters "Name=tag:Name,Values={name}" '
+           'Name=instance-state-name,Values=running '
+           '--query "Reservations[*].Instances[*].PublicDnsName" '
+           '--output text')
+
+    process = Popen([cmd], shell=True, stdout=PIPE)
+    stdout = process.communicate()[0]
+    instance_ids = stdout.decode("utf-8").replace("\n", ",")
+
+    instance_ids = list(filter(None, instance_ids.split(",")))
+
+    if len(instance_ids) > 1:
+        raise Exception(
+            f"More than one instances named {name}, "
+            "please check with your AWS admin ... ")
+
+    instance_id = instance_ids[0]
+
+    cmd = f"scp -i {key_path} ubuntu@{instance_id}:/var/log/cloud-init-output.log {cloud_init_tmp_file}"
+
+    system(cmd)
+
+    with open(cloud_init_tmp_file) as fid:
+        for line in fid:
+            pass
+        last_line = line
+
+    if "finished at" in last_line:
+        print("cloud-init is finished ...")
+    else:
+        print("cloud-init is still ongoing, please wait ...")
 
 
-def check_ip(name: str, key_name = "shiny-ec2-key.pem"):
+def login_via_ip(name: str, key_name = "shiny-ec2-key.pem"):
     """Get into an instance 
 
     Args:

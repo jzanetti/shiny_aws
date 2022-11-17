@@ -19,6 +19,7 @@ where:
     - ``terminate``: terminating an shiny application
     - ``makeami``: making an AMI from an existing server (shiny application)
     - ``check``: log into a shiny server
+    - ``info``: check if the cloud-init process is finished
 
 - ``--name`` is the shiny application name to be described/updated. It is usually the configuration filename for the shiny application.
 

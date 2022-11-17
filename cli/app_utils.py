@@ -42,7 +42,7 @@ def setup_parser():
         help="the application name to be used")
 
     return parser.parse_args(
-        ["--job", "info", "--name", "bsis_mot_fleet"]
+        # ["--job", "info", "--name", "bsis_mot_hikina"]
     )
 
 
