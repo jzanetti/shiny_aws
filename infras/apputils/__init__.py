@@ -1,1 +1,1 @@
-UTILS_JOBS = ["showip", "terminate", "makeami", "check"]
+UTILS_JOBS = ["showip", "terminate", "makeami", "check", "info"]

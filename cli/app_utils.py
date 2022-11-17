@@ -18,14 +18,14 @@ from infras.apputils.aws import run_utils
 
 def get_example_usage():
     example_text = """example:
-        * app_utils --job showip/terminate/makeami/check --name bsis_shiny_example
+        * app_utils --job showip/terminate/makeami/check/info --name bsis_shiny_example
         """
     return example_text
 
 
 def setup_parser():
     parser = argparse.ArgumentParser(
-        description="Shiny application utils (showip, check, terminate, or make an AMI)",
+        description="Shiny application utils (showip, info, check, terminate, or make an AMI)",
         epilog=get_example_usage(),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -42,7 +42,7 @@ def setup_parser():
         help="the application name to be used")
 
     return parser.parse_args(
-        # ["--job", "check", "--name", "bsis_mot_fleet"]
+        ["--job", "info", "--name", "bsis_mot_fleet"]
     )
 
 

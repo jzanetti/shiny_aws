@@ -23,15 +23,26 @@ def run_utils(job: str, name: str):
         make_ami(name)
     elif job == "check":
         check_ip(name)
+    elif job == "info":
+        cloud_info(name)
     else:
         raise Exception(f"job type {job} can not be performed ...")
+
+
+def cloud_info(name: str):
+    """Get cloud init information
+
+    Args:
+        job (str): job name, e.g., mot_dev_fleet
+    """
+    x = 3
 
 
 def check_ip(name: str, key_name = "shiny-ec2-key.pem"):
     """Get into an instance 
 
     Args:
-        job (str): job name, e.g., showip or terminate
+        job (str): job name, e.g., mot_dev_fleet
         key_path (str): public key name, e.g., shiny-ec2-key.pem
     """
 
