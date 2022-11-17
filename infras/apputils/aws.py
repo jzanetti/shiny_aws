@@ -1,7 +1,7 @@
 
 
 
-from os import system, getcwd
+from os import system, getcwd, remove
 from os.path import join, exists
 from subprocess import PIPE, Popen
 
@@ -76,6 +76,8 @@ def cloud_info(
         print("cloud-init is finished ...")
     else:
         print("cloud-init is still ongoing, please wait ...")
+
+    remove(cloud_init_tmp_file)
 
 
 def login_via_ip(name: str, key_name = "shiny-ec2-key.pem"):
