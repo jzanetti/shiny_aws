@@ -34,3 +34,8 @@ For example, we can use the following command to shutdown a shiny application ca
     ``app_utils --job makeami --name <SHINY APPLICATION NAME>`` can be used to make an AMI out of a running instance.
     This is very useful especially if we rely on ``renv`` to install dependancies ~ it usually takes very long to complete and
     install them every time when we need to bring up a new instance is really a pain.
+
+.. note::
+    
+    Sometimes we might be not able to login to the shiny servier with the error as ``REMOTE HOST IDENTIFICATION HAS CHANGED!``.
+    In this case please go to ``~/.ssh/known_hosts`` and delete the lines with the conflict IP.
