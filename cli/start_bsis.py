@@ -16,7 +16,7 @@ Debug:
 
 import argparse
 
-from infras.bsis import DEFAULT_LIFESPAN_MINS
+from infras.bsis import DEFAULT_LIFESPAN_MINS, UNLIMITED_LIFESPAN_FLAG
 from infras.bsis.aws import create_infras
 from infras.utils import obtain_cfg_name, read_cfg
 
@@ -52,7 +52,7 @@ def setup_parser():
         default=DEFAULT_LIFESPAN_MINS,
         help="Server lifespan in minutes (default: DEFAULT_LIFESPAN_MINS). "
              "For production deployment, please set this "
-             "to UNLIMITED_LIFESPAN_FLAG")
+             f"to UNLIMITED_LIFESPAN_FLAG ({UNLIMITED_LIFESPAN_FLAG})")
 
     return parser.parse_args(
         # ["--cfg", "/Users/zhans/Gitlab/shiny_aws/etc/cfg/bsis_mot_fleet.yml", "--workdir", "/tmp/bsis", "--lifespan", "360"]
