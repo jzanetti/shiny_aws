@@ -1,1 +1,1 @@
-PRIVATE_PKHS = ["motplotr", "hikina", "hikinadata"]
+PRIVATE_PKHS = ["motplotr", "hikina", "hikinadata", "acsr]
