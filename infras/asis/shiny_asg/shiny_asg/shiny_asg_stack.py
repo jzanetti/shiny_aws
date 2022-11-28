@@ -15,6 +15,7 @@ from aws_cdk import aws_sns as sns
 from aws_cdk import aws_sns_subscriptions as subscriptions
 from aws_cdk.aws_cloudwatch_actions import AutoScalingAction
 from constructs import Construct
+from aws_cdk.aws_certificatemanager import Certificate
 
 
 class ShinyAsgStack(Stack):
@@ -30,13 +31,14 @@ class ShinyAsgStack(Stack):
         # ------------------------------
         vpc = self.__create_vpc()
         sg = self.__get_sg(vpc)
+        ssl = self.__get_ssl()
 
         # ------------------------------
         # Step 2: create ASG and Load balancer
         # ------------------------------
         userData = self.__get_userdata()
         asg = self.__create_asg(vpc, sg, userData)
-        lb = self.__create_load_balancer(vpc, asg)
+        lb = self.__create_load_balancer(vpc, asg, sg, ssl)
 
         # ------------------------------
         # Step 3: connect LB to route 53
@@ -47,6 +49,13 @@ class ShinyAsgStack(Stack):
             zone = self.__query_hosted_zone()
 
         self.__create_a_record(lb, zone)
+
+
+    def __get_ssl(self):
+        return Certificate.from_certificate_arn(
+            self, 
+            id=self.__apply_status_and_region(self.__config["ssl"]["id"]), 
+            certificate_arn=self.__config["ssl"]["arn"])
 
     def __create_a_record(self, lb, zone):
 
@@ -89,9 +98,20 @@ class ShinyAsgStack(Stack):
 
         sg.add_ingress_rule(
             peer=ec2.Peer.any_ipv4(),
+            connection=ec2.Port.tcp(80),
+            description="http",
+        )
+
+        sg.add_ingress_rule(
+            peer=ec2.Peer.any_ipv4(),
             connection=ec2.Port.tcp(22),
             description="ssh",
         )
+
+        sg.add_ingress_rule(
+            peer=ec2.Peer.any_ipv4(), 
+            connection=ec2.Port.tcp(443), 
+            description="https")
 
         return sg
 
@@ -150,15 +170,21 @@ class ShinyAsgStack(Stack):
 
         return asg
 
-    def __create_load_balancer(self, vpc, asg):
+    def __create_load_balancer(self, vpc, asg, sg, ssl):
         lb = elbv2.ApplicationLoadBalancer(
             self, 
             self.__apply_status_and_region(self.__config["lb"]["id"]),
             vpc=vpc,
+            security_group=sg,
             internet_facing=True)
-        listener = lb.add_listener("Listener", port=80)
+
+        listener = lb.add_listener("Listener2", port=443)
         listener.add_targets("Target", port=80, targets=[asg])
-        listener.connections.allow_default_port_from_any_ipv4("Open this LB to the public")
+
+        listener.add_certificates(self.__apply_status_and_region(
+            self.__config["ssl"]["certificate"]), certificates=[ssl])
+        listener.connections.allow_default_port_from_any_ipv4(
+            "Open this LB to the public")
         CfnOutput(self,"LoadBalancer", export_name="LoadBalancer", value=lb.load_balancer_dns_name)
         return lb
 

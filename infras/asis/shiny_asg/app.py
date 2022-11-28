@@ -17,7 +17,7 @@ app = cdk.App()
 
 
 config = {}
-for key_name in ["common", "sg", "sns", "lb", "asg", "vpc", "route53"]:
+for key_name in ["common", "ssl", "sg", "sns", "lb", "asg", "vpc", "route53"]:
     config[key_name] = obtain_config(app, key_name)
 
 uuid = config["common"]["uuid"]

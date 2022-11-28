@@ -50,7 +50,7 @@ def setup_parser():
     return parser.parse_args(
         # [
         #    "--workdir", "/tmp/asis",
-        #    "--cfg", "/home/szhang/Github/shiny_aws/etc/cfg/asis_mot.yml",
+        #    "--cfg", "/Users/zhans/Gitlab/shiny_aws/etc/cfg/asis_mot_example.yml",
         # ]
     )
 
