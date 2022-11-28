@@ -17,16 +17,19 @@ When a shiny server is set up, by default a ``http`` link is given. In order to 
 - We need to configure the server security group. For example, usually in the ``inbound rules`` we have ``HTTP``:
 
   .. code-block:: bash
+
     IPv4	HTTP	TCP	80	0.0.0.0/0
 
   We would need to delete this line, and add a new rule with ``https``, e.g.,
 
   .. code-block:: bash
+
     IPv4	HTTPS	TCP	443	0.0.0.0/0
 
 - We should create an open SSL certificate as:
 
   .. code-block:: bash
+
     sudo -i
     openssl genrsa -out /etc/ssl/private/apache.key 2048
     openssl req -new -x509 -key /etc/ssl/private/apache.key -days 365 -sha256 -out /etc/ssl/certs/apache.crt
@@ -36,16 +39,19 @@ When a shiny server is set up, by default a ``http`` link is given. In order to 
 - Then, let's install Apache2 as:
 
   .. code-block:: bash
+
     apt-get install apache2
 
   Then it should be configured as:
 
   .. code-block:: bash
+
     a2enmod
 
   This will open a dialog that asks you which modules you would like to install. Type the following:
 
   .. code-block:: bash
+
     ssl proxy proxy_ajp proxy_http rewrite deflate headers proxy_balancer proxy_connect proxy_html
 
 - We need configure ``/etc/apache2/sites-enabled/000-default.conf`` as:
@@ -67,6 +73,7 @@ When a shiny server is set up, by default a ``http`` link is given. In order to 
 - Finally we can start ``aparch2`` as:
 
   .. code-block:: bash
+    
     service apache2 restart
 
 .. note::
