@@ -106,3 +106,9 @@ in production we can set it to `unlimited` (e.g., being defined by `UNLIMITED_LI
 carefully since AWS charges us every seconds we use the server.
 
 After the deployment, we should be able to find an EC2 instance in the console with the shiny application being installed.
+
+
+Using HTTPS
+------
+By default, **SHINY_AWS** will provide a link with ``http``, however, for accessing the link securely, ``https`` is usually recommendded.
+Details can be found `here <https://shiny-aws-doc.readthedocs.io/en/latest/Https.html>`_

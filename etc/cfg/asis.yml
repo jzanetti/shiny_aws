@@ -2,7 +2,7 @@ shiny:
   names: 
     - hello_world
   url: https://github.com/jzanetti/shiny_aws_examples.git
-  branch: main
+  branch: master
   cred: null
 
 aws: 
