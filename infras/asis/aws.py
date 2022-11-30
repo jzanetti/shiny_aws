@@ -130,6 +130,7 @@ def update_cloud_init(workdir: str, cdk_suite: str, cfg: dict) -> str:
             #   "The following package(s) have broken symlinks into the cache"
             # see details: https://github.com/rstudio/renv/issues/378
             fid.write(f"\n\n# install renv libs ...")
+            fid.write(f'\nsudo R -e "install.packages(renv)"')
             for shiny_app in cfg["shiny"]["names"]:
 
                 shiny_app_name = cfg["shiny"]["names"][shiny_app]
