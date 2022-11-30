@@ -172,6 +172,10 @@ def update_cdk_json(cdk_suite: str, uuid: str, cfg: dict):
     if cfg["aws"]["route53"]["create_new"]:
         json_cfg["context"]["route53"]["zone"]["create_new"] = True
 
+    json_cfg["context"]["ssl"]["arn"] = None
+    if cfg["aws"]["ssl"]:
+        json_cfg["context"]["ssl"]["arn"] = cfg["aws"]["ssl"]
+
     with open(cdk_json_path, 'w') as fid:
         json_dump(json_cfg, fid)
 

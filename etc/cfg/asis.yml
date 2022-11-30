@@ -8,6 +8,7 @@ shiny:
 aws: 
   ami: ami-xxxxxxxxxxxxxxx
   region: ap-southeast-2
+  ssl: null
   route53:
     create_new: false
     domain_name: xxx-dev.com
