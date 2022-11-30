@@ -48,10 +48,10 @@ def setup_parser():
         help="ASIS configuration file path")
 
     return parser.parse_args(
-        # [
-        #     "--workdir", "/tmp/asis",
-        #     "--cfg", "/Users/zhans/Github/shiny_aws/etc/cfg/asis_mot_from_ami.yml",
-        # ]
+        [
+             "--workdir", "/tmp/asis",
+             "--cfg", "/Users/zhans/Github/shiny_aws/etc/cfg/asis.yml",
+        ]
     )
 
 

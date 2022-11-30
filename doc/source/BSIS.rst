@@ -23,14 +23,14 @@ An simple example is given below:
 
    shiny: 
       names: 
-         - hello_world
+         hello_world: hello_world/link1
       url: https://github.com/jzanetti/shiny_aws_examples.git
       branch: main
       cred: null
 
 The above provides some basic shiny information: 
    - the Shiny server takes the ``main`` branch from ``https://github.com/jzanetti/shiny_aws_examples.git``. 
-   - ``hello_world`` is the only application we want to host.
+   - ``hello_world`` is the only application we want to host, and it will use the link name ``hello_world/link1`` (e.g., the IP for this app will be ``<IP Address>/hello_world/link1``)
    - there is no credentials needed
 
 For private repository we can apply a private token to access the repository. For example, we can have the credentials to access the repository as below:
@@ -39,7 +39,7 @@ For private repository we can apply a private token to access the repository. Fo
 
    shiny: 
       names: 
-         - hello_world
+         hello_world: hello_world/link1
       url: https://github.com/jzanetti/shiny_aws_examples.git
       branch: main
       cred:     

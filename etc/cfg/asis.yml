@@ -1,6 +1,6 @@
 shiny: 
   names: 
-    - hello_world
+    hello_world: hello_world_link_name/link1
   url: https://github.com/jzanetti/shiny_aws_examples.git
   branch: master
   cred: null

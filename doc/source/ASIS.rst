@@ -26,8 +26,8 @@ An simple example is shown below:
 
     shiny: 
         names: 
-            - hello_world_1
-            - hello_world_2
+            hello_world_1: hello_world/link1
+            hello_world_2: hello_world/link2
         url: https://gitlab.com/test-12345/mot_shiny_dev.git
         branch: main
         cred:

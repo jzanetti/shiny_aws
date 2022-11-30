@@ -55,7 +55,7 @@ def setup_parser():
              f"to UNLIMITED_LIFESPAN_FLAG ({UNLIMITED_LIFESPAN_FLAG})")
 
     return parser.parse_args(
-        # ["--cfg", "/Users/zhans/Gitlab/shiny_aws/etc/cfg/bsis_mot_fleet.yml", "--workdir", "/tmp/bsis", "--lifespan", "360"]
+        ["--cfg", "/Users/zhans/Github/shiny_aws/etc/cfg/bsis.yml", "--workdir", "/tmp/bsis", "--lifespan", "360"]
     )
 
 
