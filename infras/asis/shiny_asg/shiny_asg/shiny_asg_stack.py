@@ -52,6 +52,9 @@ class ShinyAsgStack(Stack):
 
 
     def __get_ssl(self):
+        if "arn" not in self.__config["ssl"]:
+            return None
+
         return Certificate.from_certificate_arn(
             self, 
             id=self.__apply_status_and_region(self.__config["ssl"]["id"]), 
@@ -178,11 +181,17 @@ class ShinyAsgStack(Stack):
             security_group=sg,
             internet_facing=True)
 
-        listener = lb.add_listener("Listener2", port=443)
+        port_num = 443
+        if ssl is None:
+            port_num = 80
+
+        listener = lb.add_listener("Listener", port=port_num)
         listener.add_targets("Target", port=80, targets=[asg])
 
-        listener.add_certificates(self.__apply_status_and_region(
-            self.__config["ssl"]["certificate"]), certificates=[ssl])
+        if ssl is not None:
+            listener.add_certificates(self.__apply_status_and_region(
+                self.__config["ssl"]["certificate"]), certificates=[ssl])
+
         listener.connections.allow_default_port_from_any_ipv4(
             "Open this LB to the public")
         CfnOutput(self,"LoadBalancer", export_name="LoadBalancer", value=lb.load_balancer_dns_name)

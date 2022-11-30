@@ -67,7 +67,7 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
 
                 fid.write(f"\nsudo rm -rf {SHINYAPP_LOC}/{shiny_app_name}")
                 fid.write(f"\nsudo mkdir -p {SHINYAPP_LOC}/{shiny_app_name}")
-                fid.write(f"\nsudo cp -rf {checkout_shiny_app} {SHINYAPP_LOC}/{shiny_app_name}")
+                fid.write(f"\nsudo cp -rf {checkout_shiny_app}/* {SHINYAPP_LOC}/{shiny_app_name}")
                 fid.write(f"\nsudo chmod -R 777 {SHINYAPP_LOC}/{shiny_app_name}")
 
             # add application dependant requirements:
