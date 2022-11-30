@@ -57,7 +57,7 @@ def setup_parser():
     return parser.parse_args(
         # [
         #     "--workdir", "/tmp/bsis",
-        #     "--cfg", "/Users/zhans/Gitlab/shiny_aws/etc/cfg/bsis_mot_example.yml",
+        #     "--cfg", "/Users/zhans/Gitlab/shiny_aws/etc/cfg/bsis_mot_fleet.yml",
         # ]
     )
 

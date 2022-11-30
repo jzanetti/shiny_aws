@@ -92,7 +92,7 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
                 shiny_app_name = cfg["shiny"]["names"][shiny_app]
 
                 shiny_app_path = join(SHINYAPP_LOC, shiny_app_name)
-                renv_lock_file = join(workdir, repo_name, shiny_app_name, "renv.lock")
+                renv_lock_file = join(workdir, repo_name, shiny_app, "renv.lock")
                 if exists(renv_lock_file):
                     private_pkgs = obtain_private_packages(renv_lock_file)
 
