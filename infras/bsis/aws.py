@@ -9,7 +9,7 @@ from subprocess import Popen
 from infras.bsis import UNLIMITED_LIFESPAN_FLAG
 from infras.utils import (create_git_url, download_base_repository,
                           get_app_dependant_cloud_init, obtain_private_packages)
-
+from infras import SHINYAPP_LOC
 
 def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -> str:
     """Creating an customized cloud-init (user data) for EC2
@@ -60,12 +60,12 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
 
             # add shiny
             fid.write(f"\n\n# adding shiny applications ...")
-            fid.write(f"\nsudo mkdir -p /srv/shiny-server/myapp")
+            fid.write(f"\nsudo mkdir -p {SHINYAPP_LOC}")
             for shiny_app in cfg["shiny"]["names"]:
                 checkout_shiny_app = join('/tmp', repo_name, shiny_app)
-                fid.write(f"\nsudo rm -rf /srv/shiny-server/myapp/{shiny_app}")
-                fid.write(f"\nsudo cp -rf {checkout_shiny_app} /srv/shiny-server/myapp/{shiny_app}")
-                fid.write(f"\nsudo chmod -R 777 /srv/shiny-server/myapp/{shiny_app}")
+                fid.write(f"\nsudo rm -rf {SHINYAPP_LOC}/{shiny_app}")
+                fid.write(f"\nsudo cp -rf {checkout_shiny_app} {SHINYAPP_LOC}/{shiny_app}")
+                fid.write(f"\nsudo chmod -R 777 {SHINYAPP_LOC}/{shiny_app}")
 
             # add application dependant requirements:
             fid.write(f"\n\n# adding application dependant requirements ...")
@@ -73,7 +73,7 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
                 fid.write("\n")
                 for proc_cloud_init_line in app_cloud_init[shiny_app]:
                     if not proc_cloud_init_line.startswith("#"):
-                        fid.write(f"cd /srv/shiny-server/myapp/{shiny_app}; {proc_cloud_init_line}")
+                        fid.write(f"cd {SHINYAPP_LOC}/{shiny_app}; {proc_cloud_init_line}")
 
             # install renv
             # note that renv::repair is needed if we migrate renv from one OS to another
@@ -82,7 +82,7 @@ def customized_userdata(workdir: str, cfg: dict, lifespan: str, cfg_name: str) -
             # see details: https://github.com/rstudio/renv/issues/378
             fid.write(f"\n\n# install renv libs ...")
             for shiny_app in cfg["shiny"]["names"]:
-                shiny_app_path = join("/srv/shiny-server/myapp", shiny_app)
+                shiny_app_path = join(SHINYAPP_LOC, shiny_app)
                 renv_lock_file = join(workdir, repo_name, shiny_app, "renv.lock")
                 if exists(renv_lock_file):
                     private_pkgs = obtain_private_packages(renv_lock_file)
