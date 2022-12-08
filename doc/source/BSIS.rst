@@ -110,5 +110,5 @@ After the deployment, we should be able to find an EC2 instance in the console w
 
 Using HTTPS
 ------
-By default, **SHINY_AWS** will provide a link with ``http``, however, for accessing the link securely, ``https`` is usually recommendded.
-Details can be found `here <https://shiny-aws-doc.readthedocs.io/en/latest/Https.html>`_
+By default, **BSIS** in ***SHINY_AWS** will provide a link with ``http``, however, for accessing the link securely, ``https`` is usually recommendded.
+Details for setting up __https__ with **BSIS** can be found `here <https://shiny-aws-doc.readthedocs.io/en/latest/Https.html>`_

@@ -1,7 +1,7 @@
 HTTPS
 =====
 
-By default, **SHINY_AWS** will provide a link with ``http``, however, for accessing the link securely, ``https`` is usually recommendded.
+By default, **BSIS** will provide a link with ``http``, however, for accessing the link securely, ``https`` is usually recommendded. N
 
 ``Https`` is a protocol that encrypts your communication with a web server. Https can be useful for two things:
 
