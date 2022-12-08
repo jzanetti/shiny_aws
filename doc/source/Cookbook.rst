@@ -38,7 +38,7 @@ Step 3: Shiny application on AWS
 First we need to create a shiny application, and test it locally. 
 
 In this tutorial, the application is called ``hello_world``. 
-After we test it locally, we should upload it to a remote _GIT_ repository. An example can be found `here <https://github.com/jzanetti/shiny_aws_examples>`_
+After we test it locally, we should upload it to a remote __GIT__ repository. An example can be found `here <https://github.com/jzanetti/shiny_aws_examples>`_
 
 There are three components in this application:
 
@@ -74,7 +74,7 @@ Note that we will need to update the following parameters in ``etc/cfg/bsis.yml`
 
 - ``ImageId``: the base Image ID (created by **Step 1**)
 - ``KeyName``: the private key to access EC2
-- ``SecurityGroupIds: Security group ID (can be obtained from AWS administor)
+- ``SecurityGroupIds``: Security group ID (can be obtained from AWS administor)
 - ``SubnetId``: Subnet ID (can be obtained from AWS administor)
 - ``IamInstanceProfile``: IAM profile for Shiny (can be obtained from AWS administor)
 
