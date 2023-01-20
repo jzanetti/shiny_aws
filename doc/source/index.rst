@@ -4,7 +4,7 @@ Welcome to SHINY_AWS
 .. image:: shiny_aws_logo.PNG
    :width: 450
 
-**SHINY_AWS** is an open-source repository that constructs a cloud (AWS) based infrastructure for hosting `Shiny <https://shiny.rstudio.com/>`_ applications (or potentially any visualization & analytical interactive UI applications). 
+**SHINY_AWS** is an open-source system developed by the `Ministry of Transport of New Zealand <https://www.transport.govt.nz>`_ for setting up an AWS-based infrastructure for hosting `Shiny <https://shiny.rstudio.com/>`_ applications (or potentially any visualization & analytical interactive applications). 
 There are two suites in the repository:
 
 - the Basic Shiny Infrastructure Suite (BSIS):
@@ -29,8 +29,9 @@ An `hello_world` example is used to demostrate the usage for this system.
 
 .. note::
 
-   Any issues/suggestions for this system please go to **Sijin ZHANG** at zsjzyhzp@gmail.com
+   Any issues/suggestions for this system please go to **Dr. Sijin ZHANG** at zhans@transport.govt.nz
 
+The codes of **SHINY_AWS** can be accessed from `here <https://github.com/jzanetti/shiny_aws>`_
 
 Contents
 --------
