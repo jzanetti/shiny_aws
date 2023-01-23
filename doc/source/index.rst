@@ -6,7 +6,7 @@ Welcome to SHINY_AWS
 
 **SHINY_AWS** is an open-source ELT infrastructure developed by the `Ministry of Transport of New Zealand <https://www.transport.govt.nz>`_ for hosting `Shiny <https://shiny.rstudio.com/>`_ applications (or potentially any visualization & analytical interactive applications).
 The purpose of the system is to better support the policy making process through intreactive code evidence. 
-Some publicly-faced dashboards (using **SHINY_AWS** as the backend) include `NZ Annual Crash Statement <https://www.mot-dev.link/acs/acs-2021/>`_ and `NZ Annual Fleet Statistics <https://www.mot-dev.link/fleet/annual-motor-vehicle-fleet-statistics/>`_.
+Some publicly-faced dashboards (using **SHINY_AWS** as the backend) include `the NZ Annual Crash Statement <https://www.mot-dev.link/acs/acs-2021/>`_ and `the NZ Annual Fleet Statistics <https://www.mot-dev.link/fleet/annual-motor-vehicle-fleet-statistics/>`_.
 
 The codes of **SHINY_AWS** can be accessed `here <https://github.com/jzanetti/shiny_aws>`_. The system is released under the `GPLv3 license <https://www.gnu.org/licenses/gpl-3.0.en.html>`_.
 
