@@ -6,7 +6,7 @@ In the section, we describe how to create a Shiny application for **SHINY_AWS**
 Shiny applications hierarchy
 ------
 
-**SHINY_AWS** uses a single server to host multiple shiny applications. All shiny applications must sit in one repository (either in _github_ or _gitlab_). For example:
+**SHINY_AWS** uses a single server to host multiple shiny applications. All shiny applications must sit in one repository (e.g., either in **github** or **gitlab**). For example:
 
 .. code-block:: bash
 
@@ -32,7 +32,7 @@ As above, ``<shiny app ..>`` is a directory contains an independant shiny applic
 
 ``ui.R`` and ``server.R`` are common Shiny files that are needed for any Shiny deployment, while ``cloud-init.sh`` is specific for AWS, which is used to provide additional user inputs for initializing an AWS instance.
 
-An minimum example for ``cloud-init.sh`` is shown below
+A minimum example for ``cloud-init.sh`` is shown below
 
 .. code-block:: bash
 
